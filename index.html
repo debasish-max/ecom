@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DesignVerse</title>
+    <link rel="stylesheet" href="style.css">
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+</head>
+
+<body>
+
+    <header>
+        <h1>DesignVerse</h1>
+        <div class="nav-right">
+            <div class="cart">
+                <a href="cart.html">🛒 Cart (<span id="cart-count">0</span>)</a>
+            </div>
+            <div id="login-btn">
+                <a href="login.html">Login</a>
+            </div>
+            <div id="logout-btn" style="display:none;" onclick="logout()">🚪 Logout</div>
+        </div>
+    </header>
+
+    <!-- Swiper -->
+     <section id="swiper-motion" >
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+            <div class="swiper-slide">Slide 1</div>
+            <div class="swiper-slide">Slide 2</div>
+            <div class="swiper-slide">Slide 3</div>
+            <div class="swiper-slide">Slide 4</div>
+            <div class="swiper-slide">Slide 5</div>
+            <div class="swiper-slide">Slide 6</div>
+            <div class="swiper-slide">Slide 7</div>
+            <div class="swiper-slide">Slide 8</div>
+            <div class="swiper-slide">Slide 9</div>
+            </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-pagination"></div>
+        </div>
+     </section>
+
+
+    <section class="products">
+        <div class="product">
+            <img src="https://via.placeholder.com/300x200?text=Poster+A3" alt="Poster">
+            <div class="info">
+                <h3>Retro Space Poster</h3>
+                <p>₹199</p>
+                <button onclick="addToCart('Retro Space Poster',199)">Add to Cart</button>
+            </div>
+        </div>
+        <div class="product">
+            <img src="https://via.placeholder.com/300x200?text=Poster+A2" alt="Poster">
+            <div class="info">
+                <h3>Mountain View Poster</h3>
+                <p>₹249</p>
+                <button onclick="addToCart('Mountain View Poster',249)">Add to Cart</button>
+            </div>
+        </div>
+        <div class="product">
+            <img src="https://via.placeholder.com/300x200?text=Banner+2x4ft" alt="Banner">
+            <div class="info">
+                <h3>Grand Opening Banner</h3>
+                <p>₹399</p>
+                <button onclick="addToCart('Grand Opening Banner',399)">Add to Cart</button>
+            </div>
+        </div>
+        <div class="product">
+            <img src="https://via.placeholder.com/300x200?text=Poster+A3" alt="Poster">
+            <div class="info">
+                <h3>Retro Space Poster</h3>
+                <p>₹199</p>
+                <button onclick="addToCart('Retro Space Poster',199)">Add to Cart</button>
+            </div>
+        </div>
+        <div class="product">
+            <img src="https://via.placeholder.com/300x200?text=Poster+A2" alt="Poster">
+            <div class="info">
+                <h3>Mountain View Poster</h3>
+                <p>₹249</p>
+                <button onclick="addToCart('Mountain View Poster',249)">Add to Cart</button>
+            </div>
+        </div>
+        <div class="product">
+            <img src="https://via.placeholder.com/300x200?text=Banner+2x4ft" alt="Banner">
+            <div class="info">
+                <h3>Grand Opening Banner</h3>
+                <p>₹399</p>
+                <button onclick="addToCart('Grand Opening Banner',399)">Add to Cart</button>
+            </div>
+        </div>
+        <div class="product">
+            <img src="https://via.placeholder.com/300x200?text=Poster+A3" alt="Poster">
+            <div class="info">
+                <h3>Retro Space Poster</h3>
+                <p>₹199</p>
+                <button onclick="addToCart('Retro Space Poster',199)">Add to Cart</button>
+            </div>
+        </div>
+        <div class="product">
+            <img src="https://via.placeholder.com/300x200?text=Poster+A2" alt="Poster">
+            <div class="info">
+                <h3>Mountain View Poster</h3>
+                <p>₹249</p>
+                <button onclick="addToCart('Mountain View Poster',249)">Add to Cart</button>
+            </div>
+        </div>
+        <div class="product">
+            <img src="https://via.placeholder.com/300x200?text=Banner+2x4ft" alt="Banner">
+            <div class="info">
+                <h3>Grand Opening Banner</h3>
+                <p>₹399</p>
+                <button onclick="addToCart('Grand Opening Banner',399)">Add to Cart</button>
+            </div>
+        </div>
+        <div class="product">
+            <img src="https://via.placeholder.com/300x200?text=Poster+A3" alt="Poster">
+            <div class="info">
+                <h3>Retro Space Poster</h3>
+                <p>₹199</p>
+                <button onclick="addToCart('Retro Space Poster',199)">Add to Cart</button>
+            </div>
+        </div>
+        <div class="product">
+            <img src="https://via.placeholder.com/300x200?text=Poster+A2" alt="Poster">
+            <div class="info">
+                <h3>Mountain View Poster</h3>
+                <p>₹249</p>
+                <button onclick="addToCart('Mountain View Poster',249)">Add to Cart</button>
+            </div>
+        </div>
+        <div class="product">
+            <img src="https://via.placeholder.com/300x200?text=Banner+2x4ft" alt="Banner">
+            <div class="info">
+                <h3>Grand Opening Banner</h3>
+                <p>₹399</p>
+                <button onclick="addToCart('Grand Opening Banner',399)">Add to Cart</button>
+            </div>
+        </div>
+    </section>
+    
+    <h1 id="new">Customize your design</h1>
+    <div class="container">
+        <h1>Poster Frame Designer</h1>
+        
+        <label for="height">Height (cm):</label>
+        <input type="number" id="height" placeholder="Enter height">
+        
+        <label for="width">Width (cm):</label>
+        <input type="number" id="width" placeholder="Enter width">
+        
+        <label for="pageSize">Page Size:</label>
+        <select id="pageSize" onchange="setPageSize()">
+        <option value="">-- Select Page Size --</option>
+        <option value="21x29.7">A4 (21 × 29.7 cm)</option>
+        <option value="29.7x42">A3 (29.7 × 42 cm)</option>
+        <option value="42x59.4">A2 (42 × 59.4 cm)</option>
+        <option value="59.4x84.1">A1 (59.4 × 84.1 cm)</option>
+        <option value="84.1x118.9">A0 (84.1 × 118.9 cm)</option>
+        <option value="custom">Custom</option>
+        </select>
+
+        <label for="photo">Upload Poster Photo:</label>
+        <input type="file" id="photo" accept="image/*">
+
+        <button onclick="generatePreview()">Generate Preview</button>
+        
+        <div class="preview" id="preview">
+        <p>No poster preview yet.</p>
+        </div>
+    </div>
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

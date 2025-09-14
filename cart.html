@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Cart</title>
+  <link rel="stylesheet" href="cart.css" />
+</head>
+<body>
+  <header class="site-header">
+    <h1 class="brand">DesignVerse</h1>
+    <nav>
+      <button class="nav-btn" onclick="window.location.href='index.html'">Home</button>
+      <button class="nav-btn" id="checkout-btn-top" onclick="openPaymentModal()">Checkout</button>
+      <span class="cart-badge">Cart: <span id="cart-count">0</span></span>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h2>Your Cart</h2>
+    <div id="cart-items" class="cart-list"></div>
+    <p id="total" class="total-line">Total: ₹0</p>
+    <div class="actions">
+      <button onclick="openPaymentModal()" class="primary">Proceed to Pay</button>
+      <button onclick="clearCart()" class="secondary">Clear Cart</button>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
+
+ 
