@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex items-center justify-center min-h-screen w-full p-4 bg-gradient-to-tr from-indigo-200 via-purple-200 to-pink-200">
+
+  <div class="w-[400px] rounded-2xl p-10 bg-white/20 border border-white/30 backdrop-blur-xl shadow-lg transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.3)]">
+    
+    <form class="flex flex-col space-y-6">
+      <h2 class="text-3xl font-bold mb-4 tracking-wide text-gray-800 text-center">Sign Up</h2>
+      
+      <!-- Email -->
+      <div class="relative">
+        <input type="text" required class="peer w-full h-12 bg-transparent border-b-2 border-gray-400 text-gray-900 placeholder-transparent outline-none px-2 focus:border-indigo-500" placeholder="Enter your email"/>
+        <label class="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500 text-base transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:top-0 peer-focus:text-sm peer-focus:text-indigo-600">Enter your email or phone number</label>
+      </div>
+
+      <!-- Password -->
+      <div class="relative">
+        <input type="password" required class="peer w-full h-12 bg-transparent border-b-2 border-gray-400 text-gray-900 placeholder-transparent outline-none px-2 focus:border-indigo-500" placeholder="Enter your password"/>
+        <label class="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500 text-base transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:top-0 peer-focus:text-sm peer-focus:text-indigo-600">Enter password</label>
+      </div>
+
+      <!-- Button -->
+      <button type="submit" class="bg-indigo-600 text-white font-semibold py-3 px-6 rounded-full text-base transition-all duration-300 hover:bg-indigo-700">Sign Up</button>
+
+      <!-- Register -->
+      <p class="text-center text-gray-700 mt-6">
+        <a href="login.html" class="text-indigo-600 hover:underline">Login</a>
+      </p>
+    </form>
+  </div>
+</body>
+</html>
