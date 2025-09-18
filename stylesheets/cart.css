@@ -158,3 +158,19 @@ h2{margin-top:0;}
   .form-row.inline { flex-direction:column; }
   .small-inline { flex-direction:column; }
 }
+<<<<<<< HEAD
+=======
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+footer {
+  background: #111;
+  color: white;
+  text-align: center;
+  padding: 15px 20px;
+  margin-bottom: 0px;
+}
+>>>>>>> e22906b (updated)
