@@ -10,8 +10,8 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
     <link rel="stylesheet" href="/stylesheets/test.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body>
@@ -36,9 +36,15 @@
                 <li><a href="#" class="nav-link">Trophy</a></li>
             </ul>
             <div class="nav-actions">
-                <button class="search-btn" aria-label="Search">🔍</button>
+                <div class="search-container">
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search products...">
+                    <button class="search-btn" aria-label="Search">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
                 <button class="cart-btn" aria-label="Shopping Cart">🛒</button>
             </div>
+
         </nav>
     </header>
 
@@ -466,6 +472,23 @@
             }
         `;
         document.head.appendChild(style);
+        // Search functionality
+        const searchInput = document.getElementById("searchInput");
+
+        searchInput.addEventListener("keyup", function () {
+            const filter = searchInput.value.toLowerCase();
+            const cards = document.querySelectorAll(".category-card, .product-card");
+
+            cards.forEach(card => {
+                const text = card.innerText.toLowerCase();
+                if (text.includes(filter)) {
+                    card.style.display = "block";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        });
+
     </script>
 </body>
 
