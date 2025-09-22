@@ -158,8 +158,6 @@ h2{margin-top:0;}
   .form-row.inline { flex-direction:column; }
   .small-inline { flex-direction:column; }
 }
-<<<<<<< HEAD
-=======
 
 a {
   color: inherit;
@@ -173,4 +171,3 @@ footer {
   padding: 15px 20px;
   margin-bottom: 0px;
 }
->>>>>>> e22906b (updated)
