@@ -614,6 +614,51 @@ h6 {
     box-shadow: var(--shadow-large);
 }
 
+/* Search Bar */
+.search-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 30px;
+  padding: 0.4rem 0.8rem;
+  box-shadow: var(--shadow-light);
+  transition: all 0.3s ease;
+}
+
+.search-container:focus-within {
+  background: white;
+  box-shadow: var(--shadow-medium);
+}
+
+.search-input {
+  border: none;
+  outline: none;
+  padding: 0.5rem;
+  width: 0;
+  font-size: 0.9rem;
+  background: transparent;
+  color: var(--text-primary);
+  transition: width 0.3s ease;
+}
+
+.search-container:focus-within .search-input {
+  width: 200px; /* expands when focused */
+}
+
+.search-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: var(--text-primary);
+  margin-left: 5px;
+}
+
+.search-btn:hover {
+  color: #667eea;
+}
+
 /* Newsletter Section */
 .newsletter {
     background: var(--dark-gradient);
