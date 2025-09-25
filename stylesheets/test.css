@@ -701,3 +701,28 @@
          gap: 1rem;
      }
  }
+ 
+ @media (max-width: 1024px) {
+    .hero-container {
+        grid-template-columns: 1fr;   /* single column */
+        text-align: center;          /* center text for better balance */
+    }
+
+    .hero-content {
+        max-width: 100%;
+        margin: 0 auto;
+    }
+
+    .hero-swiper {
+        width: 100%;                 /* full width on mobile/tablet */
+        max-width: 600px;            /* optional: limit size */
+        height: 400px;               /* reduce height for smaller screens */
+        margin: 2rem auto 0;         /* spacing above swiper */
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-swiper {
+        height: 300px;   /* smaller height for phones */
+    }
+}
