@@ -9,21 +9,39 @@ window.addEventListener('load', () => {
     }, 2000);
 });
 
-// Initialize Swiper
-const swiper = new Swiper('.swiper', {
-    slidesPerView: 1,   
+// Initialize Story Swiper
+const storySwiper = new Swiper('.story-swiper', {
+    slidesPerView: 1,
     spaceBetween: 0,
-    centeredSlides: false,
-    slidesPerView: 'auto',
     loop: true,
     autoplay: {
-        delay: 3000,
+        delay: 4000,
         disableOnInteraction: false,
     },
     pagination: {
         el: '.swiper-pagination',
         clickable: true,
     },
+    effect: 'fade',
+    fadeEffect: {
+        crossFade: true
+    }
+});
+// Story Gallery Hover Effects
+document.querySelectorAll('.swiper-slide').forEach(slide => {
+    slide.addEventListener('mouseenter', () => {
+        const img = slide.querySelector('img');
+        if (img) {
+            img.style.transform = 'scale(1.1)';
+        }
+    });
+
+    slide.addEventListener('mouseleave', () => {
+        const img = slide.querySelector('img');
+        if (img) {
+            img.style.transform = 'scale(1)';
+        }
+    });
 });
 
 // Enhanced Header Scroll Effect

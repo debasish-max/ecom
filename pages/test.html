@@ -29,10 +29,11 @@
         <nav class="nav">
             <a href="#" class="logo">DesignVerse</a>
             <ul class="nav-menu">
-                <li><a href="#" class="nav-link active">All Products</a></li>
+                <li><a href="#home" class="nav-link active">All Products</a></li>
                 <li><a href="#" class="nav-link">Banners</a></li>
                 <li><a href="#" class="nav-link">Posters</a></li>
-                <li><a href="#" class="nav-link">Trophy</a></li>
+                <li><a href="#" class="nav-link">Trophies</a></li>
+                <li><a href="#join" class="nav-link">Join Us</a></li>
             </ul>
             <div class="nav-actions">
                 <div class="search-container">
@@ -47,7 +48,7 @@
     </header>
     
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero" id="home">
         <div class="hero-container">
             <div class="hero-content">
                 <h1 class="hero-title">
@@ -60,7 +61,7 @@
                     We print it all, perfectly for you
                 </p>
                 <div class="hero-buttons">
-                    <a href="#" class="btn-primary">
+                    <a href="#collection" class="btn-primary">
                         Shop Collection
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="m9 18 6-6-6-6" />
@@ -99,27 +100,37 @@
                 </div>
             </div>
             
-            <!-- Hero Swiper -->
-            <div class="hero-swiper">
-                <div class="swiper hero-swiper-container">
+             <!-- Interactive Story Gallery -->
+            <div class="story-gallery">
+                <div class="swiper story-swiper">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
-                            <img src="https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=800&h=400&fit=crop&crop=center" alt="Design 1">
+                            <img src="https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=800&h=600&fit=crop&crop=center" alt="The Artist's Vision">
+                            <div class="slide-overlay">
+                                <div class="slide-title">The Artist's Vision</div>
+                                <div class="slide-description">Where creativity meets craftsmanship in every brushstroke</div>
+                            </div>
                         </div>
                         <div class="swiper-slide">
-                            <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&h=400&fit=crop&crop=center" alt="Design 2">
+                            <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&h=600&fit=crop&crop=center" alt="Stories in Color">
+                            <div class="slide-overlay">
+                                <div class="slide-title">Stories in Color</div>
+                                <div class="slide-description">Every hue tells a tale, every shade holds a memory</div>
+                            </div>
                         </div>
                         <div class="swiper-slide">
-                            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=400&fit=crop&crop=center" alt="Design 3">
+                            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop&crop=center" alt="Moments Captured">
+                            <div class="slide-overlay">
+                                <div class="slide-title">Moments Captured</div>
+                                <div class="slide-description">Freezing time in perfect frames of artistic expression</div>
+                            </div>
                         </div>
                         <div class="swiper-slide">
-                            <img src="https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?w=800&h=400&fit=crop&crop=center" alt="Design 4">
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="https://images.unsplash.com/photo-1582542021864-17a4ac58d273?w=800&h=400&fit=crop&crop=center" alt="Design 5">
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=800&h=400&fit=crop&crop=center" alt="Design 6">
+                            <img src="https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?w=800&h=600&fit=crop&crop=center" alt="Dreams Made Real">
+                            <div class="slide-overlay">
+                                <div class="slide-title">Dreams Made Real</div>
+                                <div class="slide-description">Transforming visions into tangible works of art</div>
+                            </div>
                         </div>
                     </div>
                     <div class="swiper-pagination"></div>
@@ -129,7 +140,7 @@
     </section>
 
     <!-- Categories Section -->
-    <section class="categories">
+    <section class="categories" id="collection">
         <div class="categories-container">
             <div class="section-header fade-in">
                 <div class="section-badge">Our Collections</div>
@@ -186,7 +197,7 @@
     </section>
 
     <!-- Newsletter Section -->
-    <section class="newsletter">
+    <section class="newsletter" id="join">
         <div class="newsletter-container">
             <h2 class="newsletter-title">Stay Updated with <span class="highlight">DesignVerse</span></h2>
             <p class="newsletter-description">
