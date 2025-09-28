@@ -13,12 +13,13 @@
 
   <style>
     :root {
+      --new: linear-gradient(-123deg, #a04af1, #1f178d);
       --white: #ffffff;
       --black: #000000;
       --primary: #4f46e5;
       --secondary: #06b6d4;
-      --gradient: linear-gradient(135deg, #4f46e5, #06b6d4);
-      --dark-bg: linear-gradient(135deg, #0f172a, #1e293b);
+      --gradient: linear-gradient(135deg, #7928fc, #32f1f1);
+      --dark-bg: linear-gradient(90deg, #978df3, #0602ee);
       --transition: all 0.5s ease;
     }
 
@@ -42,7 +43,7 @@
       position: relative;
       width: 800px;
       height: 500px;
-      background: rgba(255, 255, 255, 0.05);
+      background: rgb(245, 245, 245);
       border-radius: 20px;
       backdrop-filter: blur(20px);
       border: 1px solid rgba(255, 255, 255, 0.1);
@@ -66,7 +67,7 @@
 
     .form-box h2 {
       font-size: 32px;
-      color: var(--white);
+      color: var(--black);
       text-align: center;
       margin-bottom: 20px;
       position: relative;
@@ -97,8 +98,8 @@
       border: none;
       outline: none;
       background: transparent;
-      border-bottom: 2px solid rgba(255, 255, 255, 0.4);
-      color: var(--white);
+      border-bottom: 2px solid rgb(0, 0, 0);
+      color: var(--black);
       transition: border-color 0.3s ease;
     }
 
@@ -112,7 +113,7 @@
       left: 10px;
       transform: translateY(-50%);
       font-size: 14px;
-      color: rgba(255, 255, 255, 0.7);
+      color: rgb(0, 0, 0);
       pointer-events: none;
       transition: 0.3s;
     }
@@ -130,7 +131,7 @@
       right: 10px;
       transform: translateY(-50%);
       font-size: 20px;
-      color: rgba(255, 255, 255, 0.6);
+      color: rgba(0, 0, 0, 0.842);
       transition: color 0.3s;
     }
 
@@ -164,7 +165,7 @@
       margin-top: 20px;
       text-align: center;
       font-size: 14px;
-      color: #cbd5e1;
+      color: #000000;
     }
 
     .linkTxt a {
@@ -217,8 +218,8 @@
     .rotate-bg {
       top: -4px;
       right: 0;
-      background: var(--gradient);
-      transform: rotate(10deg) skewY(40deg);
+      background: var(--new);
+      transform: rotate(5.6deg) skewY(40deg);
       transform-origin: bottom right;
       transition: 1.5s ease;
     }
@@ -237,7 +238,7 @@
     }
 
     .wrapper.active .rotate-bg2 {
-      transform: rotate(-11deg) skewY(-40deg);
+      transform: rotate(-10deg) skewY(-40deg);
     }
 
     /* State Management */
