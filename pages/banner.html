@@ -1,591 +1,163 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Custom Banner Order — Pro</title>
-  <meta name="description"
-    content="Order custom banners online — calculate area, upload design or get a professional design, pay online. Fast shipping in Assam." />
-  <style>
-    :root {
-      --bg: #f4f7fb;
-      --card: #ffffff;
-      --accent: #0b76ff;
-      --accent-2: #2563eb;
-      --muted: #55607a;
-      --glass: rgba(11, 118, 255, 0.06);
-      --success: #16a34a;
-      --danger: #ef4444;
-      --radius: 12px;
-      --shadow: 0 8px 30px rgba(18, 24, 40, 0.06);
-      --max-width: 800px;
-      --rate: 25;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-      margin: 0;
-      padding: 28px;
-      background: linear-gradient(180deg, #f7fbff 0%, var(--bg) 100%);
-      display: flex;
-      justify-content: center;
-      color: #0b1220;
-    }
-
-    .container {
-      width: 100%;
-      max-width: var(--max-width);
-    }
-
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
-      padding: 18px;
-      border-radius: 14px;
-      color: #fff;
-      box-shadow: var(--shadow);
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .logo {
-      width: 44px;
-      height: 44px;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.12);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-    }
-
-    header h1 {
-      font-size: 18px;
-      margin: 0;
-    }
-
-    nav {
-      display: flex;
-      gap: 8px;
-    }
-
-    .btn-link {
-      background: transparent;
-      color: rgba(255, 255, 255, 0.95);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      padding: 8px 12px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    main {
-      display: grid;
-      gap: 20px;
-      margin-top: 20px;
-    }
-
-    .card {
-      background: var(--card);
-      padding: 18px;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-
-    h3 {
-      margin: 0 0 8px 0;
-    }
-
-    p.small {
-      margin: 0;
-      color: var(--muted);
-    }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
-
-    label {
-      display: block;
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 6px;
-    }
-
-    input,
-    select,
-    textarea {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #e7eefb;
-      border-radius: 10px;
-      font-size: 14px;
-    }
-
-    textarea {
-      min-height: 80px;
-      resize: vertical;
-    }
-
-    .row {
-      display: flex;
-      gap: 10px;
-    }
-
-    .muted {
-      color: var(--muted);
-    }
-
-    .actions {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      margin-top: 10px;
-    }
-
-    button {
-      background: var(--accent);
-      color: #fff;
-      padding: 10px 14px;
-      border: 0;
-      border-radius: 10px;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 6px 16px rgba(11, 118, 255, 0.12);
-    }
-
-    button.ghost {
-      background: transparent;
-      color: var(--accent);
-      border: 1px solid rgba(11, 118, 255, 0.12);
-    }
-
-    button:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    .result {
-      margin-top: 12px;
-      padding: 12px;
-      border-radius: 10px;
-      background: var(--glass);
-      color: #0b1220;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .preview {
-      border: 1px dashed #e8f0ff;
-      padding: 14px;
-      border-radius: 10px;
-      min-height: 140px;
-      background: linear-gradient(180deg, #fff, #fbfdff);
-    }
-
-    pre {
-      white-space: pre-wrap;
-      font-family: inherit;
-    }
-
-    .help {
-      font-size: 12px;
-      color: #6b7280;
-      margin-top: 6px;
-    }
-
-    .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.4);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-    }
-
-    .modal {
-      background: #fff;
-      border-radius: var(--radius);
-      padding: 20px;
-      max-width: 500px;
-      width: 100%;
-      box-shadow: var(--shadow);
-    }
-
-    .hide {
-      display: none;
-    }
-
-    .center {
-      text-align: center;
-    }
-
-    @media(max-width:600px) {
-      .form-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DesignVerse</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 </head>
 
 <body>
-  <div class="container">
+
     <header>
-      <div class="brand">
-        <div class="logo">CB</div>
-        <div>
-          <h1>Custom Banner — Pro</h1>
-          <div class="muted" style="font-size:12px">Fast design & delivery (Assam)</div>
+        <h1>DesignVerse</h1>
+        <div class="nav-right">
+            <div class="cart">
+                <a href="/pages/cart.html">🛒 Cart (<span id="cart-count">0</span>)</a>
+            </div>
+            <div id="login-btn">
+                <a href="/pages/login.html">Login</a>
+            </div>
+            <div id="logout-btn" style="display:none;" onclick="logout()">🚪 Logout</div>
         </div>
-      </div>
-      <nav>
-        <a href="#" class="btn-link" id="homeLink">Home</a>
-      </nav>
     </header>
 
-    <main>
-      <!-- Design & Order -->
-      <div id="homeView" class="card view">
-        <h3>Design & Order</h3>
-        <p class="small">Enter banner dimensions or upload your design. Rate: <strong>₹<span
-              id="rateDisplay">25</span></strong> per sq.ft. No delivery charge.</p>
-        <div class="form-grid">
-          <div>
-            <label>Width</label>
-            <div class="row">
-              <input id="width" type="number" min="0" step="0.01" placeholder="3">
-              <select id="unitWidth">
-                <option value="feet">feet</option>
-                <option value="inch">inch</option>
-                <option value="cm">cm</option>
-              </select>
+    <!-- Swiper -->
+     <section id="swiper-motion" >
+        <div class="swiper">
+            <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="/images/img1.jpg" alt="">Slide 1</div>
+            <div class="swiper-slide"><img src="/images/img6.jpg" alt="">Slide 2</div>
+            <div class="swiper-slide"><img src="/images/img3.jpg" alt="">Slide 3</div>
+            <div class="swiper-slide"><img src="/images/img4.jpg" alt="">Slide 4</div>
+            <div class="swiper-slide"><img src="/images/img5.jpg" alt="">Slide 5</div>
+            <div class="swiper-slide"><img src="/images/img6.jpg" alt="">Slide 6</div>
+            <div class="swiper-slide"><img src="/images/img1.jpg" alt="">Slide 7</div>
+            <div class="swiper-slide"><img src="/images/img5.jpg" alt="">Slide 8</div>
+            <div class="swiper-slide"><img src="/images/img6.jpg" alt="">Slide 9</div>
             </div>
-          </div>
-          <div>
-            <label>Height</label>
-            <div class="row">
-              <input id="height" type="number" min="0" step="0.01" placeholder="2">
-              <select id="unitHeight">
-                <option value="feet">feet</option>
-                <option value="inch">inch</option>
-                <option value="cm">cm</option>
-              </select>
+            <div class="swiper-pagination"></div>
+        </div>
+     </section>
+
+
+    <section class="products">
+        <div class="product">
+            <img src="/images/img6.jpg" alt="Poster">
+            <div class="info">
+                <h3>Retro Space Poster</h3>
+                <p>₹199</p>
+                <button onclick="addToCart('Retro Space Poster',199)">Add to Cart</button>
             </div>
-          </div>
-          <div style="grid-column:1/-1">
-            <label>Upload design (optional)</label>
-            <input type="file" id="fileHome" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg">
-            <div class="help">Accepted: PDF, DOC, DOCX, PNG, JPG.</div>
-          </div>
         </div>
-
-        <div class="actions">
-          <button id="calculateBtn">Calculate</button>
-          <button id="placeOrderBtn" class="ghost" disabled>Place Order</button>
-          <button id="trickBtn" class="ghost">Design for me</button>
-          <div style="margin-left:auto" class="muted">Area: <strong id="areaText">—</strong> sq.ft</div>
-        </div>
-        <div id="result" class="result hide">
-          <div>Total area: <strong id="areaVal">0</strong> sq.ft</div>
-          <div>Total cost: ₹<strong id="totalVal">0</strong></div>
-        </div>
-      </div>
-
-      <!-- Making & Order -->
-      <div id="makingView" class="card view" style="display:none; margin-top:14px">
-        <h3>Making & Order — We design for you</h3>
-        <p class="small">Choose size, language, and format. We'll prepare a mock and send it for approval.</p>
-        <div class="form-grid">
-          <div>
-            <label>Width</label>
-            <div class="row"><input id="m_width" type="number" min="0" step="0.01" placeholder="3"><select
-                id="m_unitWidth">
-                <option value="feet">feet</option>
-                <option value="inch">inch</option>
-                <option value="cm">cm</option>
-              </select></div>
-          </div>
-          <div>
-            <label>Height</label>
-            <div class="row"><input id="m_height" type="number" min="0" step="0.01" placeholder="2"><select
-                id="m_unitHeight">
-                <option value="feet">feet</option>
-                <option value="inch">inch</option>
-                <option value="cm">cm</option>
-              </select></div>
-          </div>
-          <div>
-            <label>Language</label>
-            <select id="m_language">
-              <option value="assamese">Assamese</option>
-              <option value="english">English</option>
-              <option value="both">Both</option>
-            </select>
-          </div>
-          <div>
-            <label>Format</label>
-            <select id="m_format">
-              <option value="pdf">PDF</option>
-              <option value="png">PNG</option>
-              <option value="jpg">JPG</option>
-            </select>
-          </div>
-          <div style="grid-column:1/-1">
-            <label>Upload design (optional)</label>
-            <input type="file" id="fileMaking" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg">
-          </div>
-          <div style="grid-column:1/-1">
-            <label>Banner text</label>
-            <textarea id="m_text" placeholder="Type banner text"></textarea>
-          </div>
-          <div style="grid-column:1/-1">
-            <label>Preview</label>
-            <div class="preview">
-              <pre id="m_preview">Preview will appear here after generating.</pre>
+        <div class="product">
+            <img src="/images/img5.jpg" alt="Poster">
+            <div class="info">
+                <h3>Mountain View Poster</h3>
+                <p>₹249</p>
+                <button onclick="addToCart('Mountain View Poster',249)">Add to Cart</button>
             </div>
-          </div>
         </div>
-        <div class="actions">
-          <button id="m_generate">Generate Preview</button>
-          <button id="m_placeOrder" class="ghost" disabled>Place Order</button>
-          <div style="margin-left:auto" class="muted">Area: <strong id="m_areaText">—</strong> sq.ft</div>
+        <div class="product">
+            <img src="/images/img4.jpg" alt="Banner">
+            <div class="info">
+                <h3>Grand Opening Banner</h3>
+                <p>₹399</p>
+                <button onclick="addToCart('Grand Opening Banner',399)">Add to Cart</button>
+            </div>
         </div>
-      </div>
-    </main>
-  </div>
-
-  <!-- Order Modal -->
-  <div id="orderModal" class="overlay hide">
-    <div class="modal">
-      <h2>Place Your Order</h2>
-
-      <!-- Step 1: Customer Info -->
-      <div id="step1">
-        <div class="form-grid">
-          <div>
-            <label>Name</label>
-            <input type="text" id="custName" placeholder="Your full name" />
-          </div>
-          <div>
-            <label>Phone</label>
-            <input type="tel" id="custPhone" placeholder="10-digit phone number" />
-          </div>
-          <div>
-            <label>State</label>
-            <input type="text" value="Assam" disabled />
-          </div>
-          <div>
-            <label>District</label>
-            <select id="custDistrict">
-              <option value="">Select District</option>
-              <option>Baksa</option>
-              <option>Barpeta</option>
-              <option>Bongaigaon</option>
-              <option>Cachar</option>
-              <option>Charaideo</option>
-              <option>Chirang</option>
-              <option>Darrang</option>
-              <option>Dhemaji</option>
-              <option>Dhubri</option>
-              <option>Dibrugarh</option>
-              <option>Goalpara</option>
-              <option>Golaghat</option>
-              <option>Hailakandi</option>
-              <option>Jorhat</option>
-              <option>Kamrup</option>
-              <option>Kamrup Metropolitan</option>
-              <option>Karbi Anglong</option>
-              <option>Karimganj</option>
-              <option>Kokrajhar</option>
-              <option>Lakhimpur</option>
-              <option>Majuli</option>
-              <option>Morigaon</option>
-              <option>Nagaon</option>
-              <option>Nalbari</option>
-              <option>Sivasagar</option>
-              <option>Sonitpur</option>
-              <option>Tinsukia</option>
-              <option>Dima Hasao</option>
-              <option>Udalguri</option>
-              <option>West Karbi Anglong</option>
-            </select>
-          </div>
-          <div>
-            <label>Pincode</label>
-            <input type="text" id="custPincode" placeholder="6-digit pincode" />
-          </div>
-          <div style="grid-column:1 / -1">
-            <label>Village/Town</label>
-            <input type="text" id="custVillage" placeholder="Your village/town" />
-          </div>
+        <div class="product">
+            <img src="/images/img6.jpg" alt="Poster">
+            <div class="info">
+                <h3>Retro Space Poster</h3>
+                <p>₹199</p>
+                <button onclick="addToCart('Retro Space Poster',199)">Add to Cart</button>
+            </div>
         </div>
-        <div class="actions">
-          <button id="continuePayment">Continue to Payment</button>
-          <button id="cancelOrder" class="ghost">Cancel</button>
+        <div class="product">
+            <img src="/images/img5.jpg" alt="Poster">
+            <div class="info">
+                <h3>Mountain View Poster</h3>
+                <p>₹249</p>
+                <button onclick="addToCart('Mountain View Poster',249)">Add to Cart</button>
+            </div>
         </div>
-      </div>
-
-      <!-- Step 2: Payment Options -->
-      <div id="step2" class="hide">
-        <h3>Select Payment Option</h3>
-        <div class="methods">
-          <div class="method"><span>UPI / QR Code</span><button class="payBtn">Pay</button></div>
-          <div class="method"><span>Credit/Debit Card</span><button class="payBtn">Pay</button></div>
-          <div class="method"><span>Net Banking</span><button class="payBtn">Pay</button></div>
-          <div class="method"><span>Cash on Delivery</span><button class="payBtn">Confirm</button></div>
+        <div class="product">
+            <img src="/images/img2.jpg" alt="Banner">
+            <div class="info">
+                <h3>Grand Opening Banner</h3>
+                <p>₹399</p>
+                <button onclick="addToCart('Grand Opening Banner',399)">Add to Cart</button>
+            </div>
         </div>
-        <div class="actions" style="margin-top:10px">
-          <button id="backToInfo" class="ghost">Back</button>
+        <div class="product">
+            <img src="/images/img1.jpg" alt="Poster">
+            <div class="info">
+                <h3>Retro Space Poster</h3>
+                <p>₹199</p>
+                <button onclick="addToCart('Retro Space Poster',199)">Add to Cart</button>
+            </div>
         </div>
-      </div>
-
-      <!-- Step 3: Confirmation -->
-      <div id="step3" class="hide center">
-        <h2>🎉 Congratulations!</h2>
-        <p>Your order has been placed successfully.</p>
-        <p>It will be delivered within <strong>3 days</strong> at the following address:</p>
-        <p id="deliveryAddress"></p>
-        <button id="closeModal">Close</button>
-      </div>
+        <div class="product">
+            <img src="/images/img6.jpg" alt="Poster">
+            <div class="info">
+                <h3>Mountain View Poster</h3>
+                <p>₹249</p>
+                <button onclick="addToCart('Mountain View Poster',249)">Add to Cart</button>
+            </div>
+        </div>
+        <div class="product">
+            <img src="/images/img4.jpg" alt="Banner">
+            <div class="info">
+                <h3>Grand Opening Banner</h3>
+                <p>₹399</p>
+                <button onclick="addToCart('Grand Opening Banner',399)">Add to Cart</button>
+            </div>
+        </div>
+        <div class="product">
+            <img src="/images/img3.jpg" alt="Poster">
+            <div class="info">
+                <h3>Retro Space Poster</h3>
+                <p>₹199</p>
+                <button onclick="addToCart('Retro Space Poster',199)">Add to Cart</button>
+            </div>
+        </div>
+        <div class="product">
+            <img src="/images/img1.jpg" alt="Poster">
+            <div class="info">
+                <h3>Mountain View Poster</h3>
+                <p>₹249</p>
+                <button onclick="addToCart('Mountain View Poster',249)">Add to Cart</button>
+            </div>
+        </div>
+        <div class="product">
+            <img src="/images/img4.jpg" alt="Banner">
+            <div class="info">
+                <h3>Grand Opening Banner</h3>
+                <p>₹399</p>
+                <button onclick="addToCart('Grand Opening Banner',399)">Add to Cart</button>
+            </div>
+        </div>
+    </section>
+    <div>
+        <h1 id="new">Customize your design</h1>
+        <button class="button-pre" onclick="location.href='/pages/custom.html'">Go to Customization</button>
     </div>
-  </div>
 
-  <script>
-    const RATE = 25;
-    document.getElementById('rateDisplay').textContent = RATE;
+    <footer>
+        <p>&copy; 2025 DesignVerse. All rights reserved.</p>
+        <div class="social-media">
+            <a href="#">Facebook</a> | 
+            <a href="#">Twitter</a> | 
+            <a href="#">Instagram</a>
+        </div>
+    </footer>
 
-    // Unit conversion
-    function toInches(v, unit) {
-      if (!v) return 0;
-      if (unit === 'feet') return v * 12;
-      if (unit === 'inch') return v;
-      if (unit === 'cm') return v / 2.54;
-      return v;
-    }
-    function formatINR(v) { return Number(v).toLocaleString('en-IN'); }
-    function computeArea(wId, hId, uwId, uhId) {
-      const w = parseFloat(document.getElementById(wId).value) || 0;
-      const h = parseFloat(document.getElementById(hId).value) || 0;
-      const wIn = toInches(w, document.getElementById(uwId).value);
-      const hIn = toInches(h, document.getElementById(uhId).value);
-      const area = (wIn * hIn) / 144;
-      const areaRounded = Math.max(0, Math.round(area * 100) / 100);
-      const total = Math.ceil(areaRounded * RATE);
-      return { areaRounded, total };
-    }
-
-    // Update Home view
-    document.getElementById('calculateBtn').addEventListener('click', () => {
-      const { areaRounded, total } = computeArea('width', 'height', 'unitWidth', 'unitHeight');
-      document.getElementById('areaText').textContent = areaRounded.toFixed(2);
-      document.getElementById('areaVal').textContent = areaRounded.toFixed(2);
-      document.getElementById('totalVal').textContent = formatINR(total);
-      document.getElementById('result').classList.remove('hide');
-      document.getElementById('placeOrderBtn').disabled = (areaRounded <= 0);
-      window.__order = { area: areaRounded, total };
-    });
-
-    // Switch views
-    document.getElementById('trickBtn').addEventListener('click', () => { showView('makingView'); });
-    document.getElementById('homeLink').addEventListener('click', e => { e.preventDefault(); showView('homeView'); });
-    function showView(id) {
-      document.getElementById('homeView').style.display = id === 'homeView' ? 'block' : 'none';
-      document.getElementById('makingView').style.display = id === 'makingView' ? 'block' : 'none';
-    }
-
-    // Making generate preview
-    document.getElementById('m_generate').addEventListener('click', () => {
-      const { areaRounded } = computeArea('m_width', 'm_height', 'm_unitWidth', 'm_unitHeight');
-      document.getElementById('m_areaText').textContent = areaRounded.toFixed(2);
-      const text = document.getElementById('m_text').value.trim() || 'Your banner text here';
-      const lang = document.getElementById('m_language').value;
-      const fmt = document.getElementById('m_format').value;
-      let preview = `Format: ${fmt.toUpperCase()}\nLanguage: ${lang}\n\n${text}`;
-      if (lang === 'assamese' || lang === 'both') preview += '\n\n(Will include Assamese transliteration)';
-      preview += `\n\nSize: ${areaRounded.toFixed(2)} sq.ft`;
-      document.getElementById('m_preview').textContent = preview;
-      document.getElementById('m_placeOrder').disabled = (areaRounded <= 0);
-      window.__generated = { area: areaRounded, total: Math.ceil(areaRounded * RATE) };
-    });
-
-    // Open modal
-    function openOrderModal(orderData) {
-      window.currentOrder = orderData;
-      document.getElementById('step1').classList.remove('hide');
-      document.getElementById('step2').classList.add('hide');
-      document.getElementById('step3').classList.add('hide');
-      document.getElementById('orderModal').classList.remove('hide');
-    }
-
-    // Place order from Home
-    document.getElementById('placeOrderBtn').addEventListener('click', () => {
-      if (!window.__order) return alert("Calculate first!");
-      openOrderModal(window.__order);
-    });
-
-    // Place order from Making
-    document.getElementById('m_placeOrder').addEventListener('click', () => {
-      if (!window.__generated) return alert("Generate preview first!");
-      openOrderModal(window.__generated);
-    });
-
-    // Cancel / Close
-    document.getElementById('cancelOrder').addEventListener('click', () => { document.getElementById('orderModal').classList.add('hide'); });
-    document.getElementById('closeModal').addEventListener('click', () => { document.getElementById('orderModal').classList.add('hide'); });
-
-    // Step 1 → Step 2
-    document.getElementById('continuePayment').addEventListener('click', () => {
-      const name = document.getElementById('custName').value.trim();
-      const phone = document.getElementById('custPhone').value.trim();
-      const district = document.getElementById('custDistrict').value;
-      const pincode = document.getElementById('custPincode').value.trim();
-      const village = document.getElementById('custVillage').value.trim();
-
-      if (!name || !phone || !district || !pincode || !village) {
-        alert("Please fill all fields.");
-        return;
-      }
-
-      window.orderInfo = { name, phone, district, pincode, village, area: window.currentOrder.area, total: window.currentOrder.total };
-      document.getElementById('step1').classList.add('hide');
-      document.getElementById('step2').classList.remove('hide');
-    });
-
-    // Back to info
-    document.getElementById('backToInfo').addEventListener('click', () => {
-      document.getElementById('step1').classList.remove('hide');
-      document.getElementById('step2').classList.add('hide');
-    });
-
-    // Payment simulation
-    function completePayment() {
-      document.getElementById('step2').classList.add('hide');
-      const addr = `${window.orderInfo.village}, ${window.orderInfo.district}, Assam - ${window.orderInfo.pincode}`;
-      document.getElementById('deliveryAddress').textContent = addr;
-      document.getElementById('step3').classList.remove('hide');
-    }
-
-    // Payment buttons
-    document.querySelectorAll('.payBtn').forEach(btn => btn.addEventListener('click', completePayment));
-  </script>
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="/Javascripts/swiper.js"></script>
+    <script src="/Javascripts/script.js"></script>
 </body>
-
 </html>

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trophy Zone</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+  --bg: #f4f6fb;
+  --primary: #facc15;
+  --dark: #222;
+  --success: #16a34a;
+  --danger: #dc2626;
+  --radius: 12px;
+  --shadow: 0 6px 12px rgba(0,0,0,0.15);
+  --card-hover-shadow: 0 12px 24px rgba(0,0,0,0.2);
+}
+
+* { box-sizing: border-box; margin:0; padding:0; }
+body { font-family:'Segoe UI',Arial,sans-serif; background: var(--bg); color: var(--dark); transition: background 0.3s, color 0.3s; }
+
+header {
+  background: var(--dark);
+  color:#fff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:15px 20px;
+  position:sticky;
+  top:0;
+  z-index:100;
+  box-shadow:0 2px 6px rgba(0,0,0,0.2);
+  animation:slideDown 0.5s ease;
+}
+header h1 { margin:0; font-size:1.7rem; }
+header .nav-buttons { position:absolute; right:20px; display:flex; gap:10px; }
+header button {
+  background: var(--primary);
+  border:none;
+  padding:8px 15px;
+  border-radius: var(--radius);
+  cursor:pointer;
+  font-weight:600;
+  transition: all 0.3s ease;
+}
+header button:hover { opacity:0.85; transform:scale(1.05); }
+
+#cartCount {
+  background: var(--danger);
+  color: #fff;
+  border-radius: 50%;
+  padding: 2px 8px;
+  font-size: 12px;
+  margin-left:4px;
+  animation:pop 0.5s ease;
+}
+
+main {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+/* Product Card */
+.card {
+  background:#fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow:hidden;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  text-align:center;
+  cursor:pointer;
+  position:relative;
+}
+.card:hover { transform:translateY(-10px) scale(1.02); box-shadow: var(--card-hover-shadow); }
+.card img { width:100%; height:200px; object-fit:cover; border-bottom:1px solid #eee; transition: transform 0.5s ease; }
+.card:hover img { transform: scale(1.05); }
+.card-content { padding:15px; }
+.card h3 { margin:10px 0; font-size:1.1rem; }
+.price { font-size:18px; font-weight:bold; }
+.discount { color: var(--success); font-size:14px; }
+.badge {
+  position:absolute;
+  top:10px; left:10px;
+  background: var(--danger);
+  color:#fff;
+  padding:4px 8px;
+  border-radius: var(--radius);
+  font-size:12px;
+  animation:badgeBounce 1s infinite alternate;
+}
+
+/* Modals */
+.modal {
+  display:none;
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background:rgba(0,0,0,0.6);
+  justify-content:center;
+  align-items:center;
+  z-index:200;
+  animation:fadeIn 0.4s ease;
+}
+.modal-content {
+  background:#fff;
+  border-radius:var(--radius);
+  padding:20px;
+  width:90%;
+  max-width:800px;
+  max-height:90vh;
+  overflow-y:auto;
+  position:relative;
+  box-shadow:var(--shadow);
+  transform:translateY(-20px);
+  animation:modalSlide 0.4s ease forwards;
+}
+.modal .close-btn, .modal .back-btn {
+  position:absolute;
+  top:10px;
+  background:var(--danger);
+  color:#fff;
+  border:none;
+  padding:6px 10px;
+  border-radius:var(--radius);
+  cursor:pointer;
+  font-size:14px;
+  transition: all 0.3s ease;
+}
+.modal .close-btn:hover, .modal .back-btn:hover { transform:scale(1.1); }
+.modal .close-btn { right:10px; }
+.modal .back-btn { left:10px; }
+
+/* Product Detail */
+.product-detail { display:flex; flex-wrap:wrap; gap:20px; }
+.product-images { flex:1; min-width:250px; }
+.product-images img { width:100%; border-radius:var(--radius); transition: transform 0.4s ease; }
+.product-images img:hover { transform:scale(1.05); }
+.thumbnails { display:flex; gap:10px; margin-top:10px; }
+.thumbnails img { width:60px; height:60px; object-fit:cover; border:2px solid transparent; border-radius:var(--radius); cursor:pointer; transition: all 0.3s ease; }
+.thumbnails img.active { border-color: var(--primary); transform:scale(1.1); }
+
+.product-info { flex:1; min-width:250px; }
+.stars { color:gold; margin:8px 0; }
+.desc { margin:10px 0; font-size:14px; color:#444; line-height:1.5; }
+.detail-footer { position:sticky; bottom:0; background:#fff; padding:10px; display:flex; gap:10px; border-top:1px solid #ddd; }
+.detail-footer button { flex:1; padding:12px; border:none; border-radius:var(--radius); font-weight:600; cursor:pointer; transition:all 0.3s ease; }
+.detail-footer .add { background:var(--primary); }
+.detail-footer .add:hover { transform:scale(1.05); }
+.detail-footer .buy { background:var(--success); color:#fff; }
+.detail-footer .buy:hover { transform:scale(1.05); }
+
+/* Cart Modal Styling */
+.cart-item {
+  display:flex; align-items:center; gap:10px; margin:8px 0; padding:6px 0;
+  border-bottom:1px solid #eee; transition:all 0.3s ease;
+}
+.cart-item img { width:60px; height:60px; object-fit:cover; border-radius:8px; border:1px solid #ddd; }
+.cart-item div { flex:1; }
+.cart-item button {
+  background: var(--danger);
+  color:#fff;
+  font-size:12px;
+  padding:4px 8px;
+  border:none;
+  border-radius:var(--radius);
+  cursor:pointer;
+  transition: all 0.3s ease;
+}
+.cart-item button:hover { transform:scale(1.1); }
+
+/* Order/Payment/Success */
+#orderModal input, #orderModal select { width:100%; padding:10px; margin:8px 0; border-radius:var(--radius); border:1px solid #ccc; transition:all 0.3s ease; }
+#orderModal input:focus, #orderModal select:focus { border-color:var(--primary); outline:none; box-shadow:0 0 5px var(--primary); }
+#orderModal button { width:100%; padding:12px; margin-top:10px; border:none; border-radius:var(--radius); font-weight:bold; cursor:pointer; transition:all 0.3s ease; }
+#orderModal button:hover { transform:scale(1.03); }
+.hidden { display:none; }
+.success-msg { text-align:center; font-size:18px; color:var(--success); font-weight:bold; animation:fadeIn 0.8s ease; }
+
+/* Animations */
+@keyframes slideDown { from {transform:translateY(-50px); opacity:0;} to {transform:translateY(0); opacity:1;} }
+@keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+@keyframes modalSlide { from {opacity:0; transform:translateY(-20px);} to {opacity:1; transform:translateY(0);} }
+@keyframes badgeBounce { 0% {transform:translateY(0);} 100% {transform:translateY(-5px);} }
+@keyframes pop { 0% {transform:scale(0);} 50% {transform:scale(1.2);} 100% {transform:scale(1);} }
+
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Trophy Zone</h1>
+  <div class="nav-buttons">
+    <button onclick="goHome()"><i class="fa fa-home"></i> Home</button>
+    <button onclick="openCart()"><i class="fa fa-shopping-cart"></i> Cart <span id="cartCount">0</span></button>
+  </div>
+</header>
+
+<main id="product-list"></main>
+
+<!-- Detail Modal -->
+<div class="modal" id="detailModal">
+  <div class="modal-content">
+    <button class="back-btn" onclick="closeDetail()"><i class="fa fa-arrow-left"></i> Back</button>
+    <button class="close-btn" onclick="closeDetail()"><i class="fa fa-times"></i></button>
+    <div class="product-detail">
+      <div class="product-images">
+        <img id="mainImage" src="">
+        <div class="thumbnails" id="thumbs"></div>
+      </div>
+      <div class="product-info">
+        <h2 id="detailName"></h2>
+        <div class="price">₹<span id="detailPrice"></span> <span class="discount" id="detailDiscount"></span></div>
+        <div class="stars" id="detailStars"></div>
+        <div class="desc" id="detailDesc"></div>
+      </div>
+    </div>
+    <div class="detail-footer">
+      <button class="add" id="detailAdd">Add to Cart</button>
+      <button class="buy" id="detailBuy">Buy Now</button>
+    </div>
+  </div>
+</div>
+
+<!-- Cart Modal -->
+<div class="modal" id="cartModal">
+  <div class="modal-content">
+    <button class="back-btn" onclick="closeCart()"><i class="fa fa-arrow-left"></i> Back</button>
+    <button class="close-btn" onclick="closeCart()"><i class="fa fa-times"></i></button>
+    <h2>Your Cart</h2>
+    <div id="cartItems"></div>
+    <h3>Total: ₹<span id="cartTotal">0</span></h3>
+    <button class="buy" onclick="placeOrder()">Place Order</button>
+  </div>
+</div>
+
+<!-- Order Modal -->
+<div class="modal" id="orderModal">
+  <div class="modal-content" id="orderForm">
+    <button class="back-btn" onclick="backToCart()"><i class="fa fa-arrow-left"></i> Back</button>
+    <button class="close-btn" onclick="closeAll()"><i class="fa fa-times"></i></button>
+    <h2>Place Order</h2>
+    <input type="text" id="custName" placeholder="Full Name">
+    <input type="text" value="Assam" readonly>
+    <select id="district">
+      <option value="">Select District</option>
+      <option>Kamrup</option><option>Dibrugarh</option><option>Jorhat</option>
+      <option>Tinsukia</option><option>Golaghat</option><option>Sivasagar</option>
+      <option>Lakhimpur</option><option>Dhemaji</option><option>Sonitpur</option>
+      <option>Nagaon</option><option>Barpeta</option><option>Morigaon</option>
+      <option>Bongaigaon</option><option>Kokrajhar</option><option>Darrang</option>
+    </select>
+    <input type="text" id="phone" placeholder="Phone Number (10 digits)" maxlength="10">
+    <input type="text" id="pincode" placeholder="Pincode (7 digits)" maxlength="7">
+    <input type="text" id="village" placeholder="Village/Town">
+    <button class="buy" onclick="goPayment()">Go to Payment</button>
+  </div>
+
+  <div class="modal-content hidden" id="paymentForm">
+    <button class="back-btn" onclick="backToOrder()"><i class="fa fa-arrow-left"></i> Back</button>
+    <button class="close-btn" onclick="closeAll()"><i class="fa fa-times"></i></button>
+    <h2>Select Payment Option</h2>
+    <select id="paymentOption">
+      <option value="">Choose Payment</option>
+      <option>UPI</option>
+      <option>Net Banking</option>
+      <option>Credit/Debit Card</option>
+      <option>Wallet</option>
+      <option>Cash on Delivery</option>
+    </select>
+    <button class="buy" onclick="confirmPayment()">Pay Now</button>
+  </div>
+
+  <div class="modal-content hidden" id="successMsg">
+    <div class="success-msg">
+      🎉 Congratulations! <br>
+      Your order will be shipped within 7 days to your given address.
+    </div>
+  </div>
+</div>
+
+<script>
+// Products
+const products = [];
+for(let i=1;i<=10;i++){
+  products.push({
+    name:`Trophy ${i}`,
+    price:500+i*100,
+    discount:`${10+(i*2)}%`,
+    rating:Math.floor(Math.random()*5)+1,
+    images:[`https://picsum.photos/seed/t${i}a/400/300`,`https://picsum.photos/seed/t${i}b/400/300`,`https://picsum.photos/seed/t${i}c/400/300`,`https://picsum.photos/seed/t${i}d/400/300`],
+    desc:`Description for Trophy ${i}. Perfect for awards.`
+  });
+}
+
+const productList=document.getElementById('product-list');
+let cart=[];
+
+// Render products
+products.forEach(p=>{
+  let card=document.createElement('div');
+  card.className='card';
+  card.innerHTML=`
+    <div style="position:relative">
+      <span class="badge">${p.discount}</span>
+      <img src="${p.images[0]}">
+    </div>
+    <div class="card-content">
+      <h3>${p.name}</h3>
+      <div class="price">₹${p.price}</div>
+    </div>
+  `;
+  productList.appendChild(card);
+  card.onclick=()=>openDetail(p);
+});
+
+// Detail modal
+function openDetail(p){
+  document.getElementById('detailName').innerText=p.name;
+  document.getElementById('detailPrice').innerText=p.price;
+  document.getElementById('detailDiscount').innerText=p.discount;
+  document.getElementById('detailDesc').innerText=p.desc;
+  document.getElementById('detailStars').innerHTML="★".repeat(p.rating)+"☆".repeat(5-p.rating);
+
+  const mainImg=document.getElementById('mainImage');
+  mainImg.src=p.images[0];
+  const thumbs=document.getElementById('thumbs'); thumbs.innerHTML="";
+  p.images.forEach((img,idx)=>{
+    let t=document.createElement('img'); t.src=img;
+    if(idx===0) t.classList.add("active");
+    t.onclick=()=>{mainImg.src=img; document.querySelectorAll('#thumbs img').forEach(x=>x.classList.remove("active")); t.classList.add("active");};
+    thumbs.appendChild(t);
+  });
+  document.getElementById('detailAdd').onclick=()=>{cart.push(p); updateCart(); alert(p.name+" added to cart");};
+  document.getElementById('detailBuy').onclick=()=>{cart=[p]; updateCart(); placeOrder();};
+  document.getElementById('detailModal').style.display="flex";
+}
+function closeDetail(){document.getElementById('detailModal').style.display="none";}
+function updateCart(){document.getElementById("cartCount").innerText=cart.length;}
+
+// Cart with images
+function openCart(){
+  const modal=document.getElementById('cartModal');
+  const items=document.getElementById('cartItems'); items.innerHTML=""; let total=0;
+  cart.forEach((item,idx)=>{
+    total+=item.price;
+    const div=document.createElement('div'); div.className="cart-item";
+    div.innerHTML=`
+      <img src="${item.images[0]}" alt="${item.name}">
+      <div>
+        <strong>${item.name}</strong><br>₹${item.price}
+      </div>
+      <button onclick="removeFromCart(${idx})">Remove</button>
+    `;
+    items.appendChild(div);
+  });
+  document.getElementById('cartTotal').innerText=total; modal.style.display="flex";
+}
+function closeCart(){document.getElementById('cartModal').style.display="none";}
+function removeFromCart(i){cart.splice(i,1); updateCart(); openCart();}
+
+// Order & Payment
+const orderModal=document.getElementById('orderModal');
+const orderForm=document.getElementById('orderForm');
+const paymentForm=document.getElementById('paymentForm');
+const successMsg=document.getElementById('successMsg');
+
+function placeOrder(){closeCart(); orderModal.style.display='flex'; orderForm.classList.remove('hidden'); paymentForm.classList.add('hidden'); successMsg.classList.add('hidden');}
+function backToCart(){paymentForm.classList.add('hidden'); orderForm.classList.add('hidden'); successMsg.classList.add('hidden'); openCart();}
+function backToOrder(){paymentForm.classList.add('hidden'); orderForm.classList.remove('hidden'); successMsg.classList.add('hidden');}
+function goPayment(){
+  let pin=document.getElementById('pincode').value;
+  let phone=document.getElementById('phone').value;
+  let district=document.getElementById('district').value;
+  let name=document.getElementById('custName').value;
+  let village=document.getElementById('village').value;
+  if(!name || !district || !village || pin.length!==7 || isNaN(pin) || phone.length!==10 || isNaN(phone)){alert("Please fill all fields correctly"); return;}
+  orderForm.classList.add('hidden'); paymentForm.classList.remove('hidden');
+}
+function confirmPayment(){
+  let option=document.getElementById('paymentOption').value;
+  if(option===""){alert("Select payment option"); return;}
+  paymentForm.classList.add('hidden'); successMsg.classList.remove('hidden');
+  setTimeout(()=>{closeAll();},4000);
+}
+function closeAll(){orderModal.style.display='none'; goHome();}
+function goHome(){window.location.reload();}
+</script>
+
+</body>
+</html>
