@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -119,18 +120,22 @@
       transform: translateY(-50%);
       font-size: clamp(12px, 2vw, 14px);
       color: rgb(0, 0, 0);
-      pointer-events: none; 
-      transition: 0.3s;
+      pointer-events: none;
+      transition: 0.3s ease-in-out;
+      background: rgb(245, 245, 245);
+      padding: 0 5px;
     }
 
-    .input-box input:focus ~ label,
-    .input-box input:valid ~ label {
-      top: 0px;
+    .input-box input:focus~label,
+    .input-box input:valid~label {
+      top: -8px;
+      left: 8px;
       font-size: clamp(10px, 1.5vw, 12px);
       color: var(--secondary);
       background: rgb(245, 245, 245);
       padding: 0 5px;
     }
+
 
     .input-box i {
       position: absolute;
@@ -142,8 +147,8 @@
       transition: color 0.3s;
     }
 
-    .input-box input:focus ~ i,
-    .input-box input:valid ~ i {
+    .input-box input:focus~i,
+    .input-box input:valid~i {
       color: var(--secondary);
     }
 
@@ -215,21 +220,22 @@
       background-clip: text;
     }
 
-    .info-tex.login p{
+    .info-tex.login p {
       font-size: clamp(13px, 2vw, 15px);
       opacity: 0.85;
       line-height: 1.6;
       padding-left: 50px;
     }
 
-    .info-text.register p{
+    .info-text.register p {
       font-size: clamp(13px, 2vw, 15px);
       opacity: 0.85;
       line-height: 1.6;
     }
 
     /* Background Shapes */
-    .rotate-bg, .rotate-bg2 {
+    .rotate-bg,
+    .rotate-bg2 {
       position: absolute;
       width: 850px;
       height: 600px;
@@ -264,25 +270,25 @@
     }
 
     /* State Management */
-    .form-box.login { 
+    .form-box.login {
       left: 0;
     }
-    
-    .form-box.register { 
-      right: 0; 
-      opacity: 0; 
-      transform: translateX(100%); 
+
+    .form-box.register {
+      right: 0;
+      opacity: 0;
+      transform: translateX(100%);
       pointer-events: none;
     }
-    
-    .info-text.login { 
-      right: 0; 
+
+    .info-text.login {
+      right: 0;
       text-align: right;
     }
-    
-    .info-text.register { 
-      left: 0; 
-      transform: translateX(-100%); 
+
+    .info-text.register {
+      left: 0;
+      transform: translateX(-100%);
       opacity: 0;
     }
 
@@ -317,36 +323,37 @@
       font-size: clamp(12px, 2vw, 14px);
       animation: slideIn 0.3s ease;
     }
-    
+
     @keyframes slideIn {
       from {
         opacity: 0;
         transform: translateY(-10px);
       }
+
       to {
         opacity: 1;
         transform: translateY(0);
       }
     }
-    
+
     .error {
       background-color: #ffe6e6;
       color: #cc0000;
       border: 1px solid #cc0000;
     }
-    
+
     .success {
       background-color: #e6ffe6;
       color: #008800;
       border: 1px solid #008800;
     }
-    
+
     .loading {
       opacity: 0.7;
       pointer-events: none;
       position: relative;
     }
-    
+
     .loading::after {
       content: "";
       position: absolute;
@@ -361,9 +368,11 @@
       border-top-color: transparent;
       animation: spin 0.6s linear infinite;
     }
-    
+
     @keyframes spin {
-      to { transform: rotate(360deg); }
+      to {
+        transform: rotate(360deg);
+      }
     }
 
     /* Tablet Styles (768px - 1024px) */
@@ -381,11 +390,14 @@
       .info-text {
         padding: 35px;
       }
-      .info-text.login p{
+
+      .info-text.login p {
         padding-left: 38px;
         text-align: right;
       }
-      .rotate-bg, .rotate-bg2 {
+
+      .rotate-bg,
+      .rotate-bg2 {
         width: 750px;
         height: 550px;
       }
@@ -460,7 +472,8 @@
         text-align: center;
       }
 
-      .rotate-bg, .rotate-bg2 { 
+      .rotate-bg,
+      .rotate-bg2 {
         display: none;
       }
 
@@ -572,6 +585,7 @@
     }
   </style>
 </head>
+
 <body>
   <div class="wrapper">
     <span class="rotate-bg"></span>
@@ -653,7 +667,7 @@
       e.preventDefault();
       wrapper.classList.add('active');
     });
-    
+
     loginLink.addEventListener("click", (e) => {
       e.preventDefault();
       wrapper.classList.remove('active');
@@ -682,10 +696,10 @@
     // Login form handler (ready for backend integration)
     document.getElementById('loginForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      
+
       const identifier = document.getElementById('loginIdentifier').value.trim();
       const password = document.getElementById('loginPassword').value;
-      
+
       if (!identifier || !password) {
         showMessage('loginMessage', 'Please fill in all fields', 'error');
         return;
@@ -697,7 +711,7 @@
       setTimeout(() => {
         setLoading('loginBtn', false);
         showMessage('loginMessage', 'Login successful! Redirecting...', 'success');
-        
+
         // Redirect after success
         setTimeout(() => {
           window.location.href = 'index.html';
@@ -735,12 +749,12 @@
     // Register form handler (ready for backend integration)
     document.getElementById('registerForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      
+
       const username = document.getElementById('registerUsername').value.trim();
       const email = document.getElementById('registerEmail').value.trim();
       const phone = document.getElementById('registerPhone').value.trim();
       const password = document.getElementById('registerPassword').value;
-      
+
       if (!username || !email || !phone || !password) {
         showMessage('registerMessage', 'Please fill in all fields', 'error');
         return;
@@ -758,7 +772,7 @@
       setTimeout(() => {
         setLoading('registerBtn', false);
         showMessage('registerMessage', 'Registration successful! Redirecting...', 'success');
-        
+
         // Redirect after success
         setTimeout(() => {
           window.location.href = 'index.html';
@@ -794,4 +808,5 @@
     });
   </script>
 </body>
+
 </html>
