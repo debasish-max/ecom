@@ -657,6 +657,7 @@
   </div>
 
   <!-- Script -->
+   <script src="/Javascripts/auth.js"></script>
   <script>
     const wrapper = document.querySelector('.wrapper');
     const registerLink = document.querySelector('.register-link');
@@ -717,8 +718,7 @@
           window.location.href = 'index.html';
         }, 1500);
       }, 1500);
-
-      /* 
+      
       // Uncomment when backend is ready:
       try {
         const response = await fetch('http://localhost:5000/api/auth/login', {
@@ -743,7 +743,6 @@
         setLoading('loginBtn', false);
         showMessage('loginMessage', 'Network error. Please try again.', 'error');
       }
-      */
     });
 
     // Register form handler (ready for backend integration)
@@ -779,7 +778,6 @@
         }, 1500);
       }, 1500);
 
-      /*
       // Uncomment when backend is ready:
       try {
         const response = await fetch('http://localhost:5000/api/auth/register', {
@@ -804,7 +802,6 @@
         setLoading('registerBtn', false);
         showMessage('registerMessage', 'Network error. Please try again.', 'error');
       }
-      */
     });
   </script>
 </body>
