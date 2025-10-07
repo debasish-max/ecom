@@ -7,7 +7,7 @@ class AuthManager {
   }
 
   // Register user
-  async register(username, email, password) {
+  async register(username, email, phone, password) {
     try {
       const response = await fetch(`${this.baseURL}/auth/register`, {
         method: 'POST',
@@ -23,7 +23,10 @@ class AuthManager {
         // Store tokens
         localStorage.setItem('accessToken', data.accessToken);
         localStorage.setItem('refreshToken', data.refreshToken);
-        localStorage.setItem('user', JSON.stringify(data.user));
+        localStorage.setItem('user', JSON.stringify({
+          ...data.user,
+          phone: phone // Store phone locally since backend doesn't have it yet
+        }));
         
         return { success: true, data };
       } else {
@@ -31,7 +34,7 @@ class AuthManager {
       }
     } catch (error) {
       console.error('Registration error:', error);
-      return { success: false, error: 'Network error. Please try again.' };
+      return { success: false, error: 'Unable to connect to server. Please try again.' };
     }
   }
 
@@ -60,7 +63,7 @@ class AuthManager {
       }
     } catch (error) {
       console.error('Login error:', error);
-      return { success: false, error: 'Network error. Please try again.' };
+      return { success: false, error: 'Unable to connect to server. Please try again.' };
     }
   }
 
@@ -84,6 +87,7 @@ class AuthManager {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
       localStorage.removeItem('user');
+      window.location.href = 'login.html';
     }
   }
 
@@ -125,10 +129,77 @@ class AuthManager {
       return false;
     }
   }
+
+  // Make authenticated API request
+  async authenticatedRequest(url, options = {}) {
+    try {
+      // Add authorization header
+      options.headers = {
+        ...options.headers,
+        'Authorization': `Bearer ${this.token}`,
+        'Content-Type': 'application/json'
+      };
+
+      let response = await fetch(url, options);
+
+      // If token expired, try to refresh
+      if (response.status === 401) {
+        const refreshed = await this.refreshAccessToken();
+        if (refreshed) {
+          // Retry request with new token
+          options.headers['Authorization'] = `Bearer ${this.token}`;
+          response = await fetch(url, options);
+        } else {
+          // Refresh failed, logout user
+          this.logout();
+          return null;
+        }
+      }
+
+      return response;
+    } catch (error) {
+      console.error('API request error:', error);
+      return null;
+    }
+  }
+
+  // Get user profile
+  async getProfile() {
+    try {
+      const response = await this.authenticatedRequest(`${this.baseURL}/user/profile`);
+      if (response && response.ok) {
+        const data = await response.json();
+        return { success: true, data: data.user };
+      }
+      return { success: false, error: 'Failed to fetch profile' };
+    } catch (error) {
+      console.error('Profile fetch error:', error);
+      return { success: false, error: 'Unable to fetch profile' };
+    }
+  }
+
+  // Update user profile
+  async updateProfile(profileData) {
+    try {
+      const response = await this.authenticatedRequest(`${this.baseURL}/user/profile`, {
+        method: 'PUT',
+        body: JSON.stringify({ profile: profileData })
+      });
+
+      if (response && response.ok) {
+        const data = await response.json();
+        // Update local storage
+        localStorage.setItem('user', JSON.stringify(data.user));
+        return { success: true, data: data.user };
+      }
+      return { success: false, error: 'Failed to update profile' };
+    } catch (error) {
+      console.error('Profile update error:', error);
+      return { success: false, error: 'Unable to update profile' };
+    }
+  }
 }
 
-// Initialize auth manager
+// Initialize and export auth manager
 const auth = new AuthManager();
-
-// Export for use in other files
 window.auth = auth;
