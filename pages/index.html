@@ -13,9 +13,116 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="/stylesheets/test.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.5/swiper-bundle.min.css">
+    
+    <style>
+        /* User Dropdown Styles */
+        .user-dropdown {
+            position: relative;
+        }
+
+        .user-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: inherit;
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: opacity 0.3s;
+        }
+
+        .user-btn:hover {
+            opacity: 0.7;
+        }
+
+        .user-name {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            min-width: 200px;
+            padding: 0.5rem 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            margin-top: 0.5rem;
+        }
+
+        .dropdown-menu.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1.25rem;
+            color: #333;
+            text-decoration: none;
+            transition: background 0.2s;
+            cursor: pointer;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        .dropdown-item:hover {
+            background: #f5f5f5;
+        }
+
+        .dropdown-item i {
+            font-size: 1rem;
+            width: 20px;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background: #e0e0e0;
+            margin: 0.5rem 0;
+        }
+
+        .login-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Hide cart when not logged in */
+        .nav-actions .cart-btn.hidden {
+            display: none;
+        }
+    </style>
 </head>
 
-<!-- Page Loader -->
+<body>
+    <!-- Page Loader -->
     <div class="page-loader" id="pageLoader">
         <div class="loader-content">
             <div class="loader-logo">DesignVerse</div>
@@ -43,8 +150,16 @@
                         <i class="fa fa-search"></i>
                     </button>
                 </div>
-                <button class="cart-btn" aria-label="Shopping Cart"><i class="fa-solid fa-cart-shopping"></i></button>
-                <button class="cart-btn" aria-label="Shopping Cart"><i class="fa-solid fa-user"></i></button>
+                
+                <!-- Cart Button (shown only when logged in) -->
+                <button class="cart-btn hidden" id="cartBtn" aria-label="Shopping Cart">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                </button>
+                
+                <!-- User Section -->
+                <div id="userSection">
+                    <!-- Will be populated by JavaScript -->
+                </div>
             </div>
         </nav>
     </header>
@@ -282,8 +397,105 @@
             </div>
         </div>
     </footer>
+    
+    <!-- Auth Script -->
+    <script src="/Javascripts/auth.js"></script>
+    
     <!-- Swiper JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.5/swiper-bundle.min.js"></script>
     <script src="/Javascripts/test.js"></script>
+    
+    <!-- Authentication Script -->
+    <script>
+        // Wait for DOM to load
+        document.addEventListener('DOMContentLoaded', function() {
+            const userSection = document.getElementById('userSection');
+            const cartBtn = document.getElementById('cartBtn');
+            
+            // Check if user is logged in
+            if (auth.isLoggedIn()) {
+                const user = auth.getCurrentUser();
+                
+                // Show cart button
+                cartBtn.classList.remove('hidden');
+                
+                // Create user dropdown
+                userSection.innerHTML = `
+                    <div class="user-dropdown">
+                        <button class="user-btn cart-btn" id="userMenuBtn" aria-label="User Menu">
+                            <i class="fa-solid fa-user"></i>
+                            <span class="user-name">${user.username}</span>
+                        </button>
+                        <div class="dropdown-menu" id="userDropdown">
+                            <a href="#" class="dropdown-item" id="profileLink">
+                                <i class="fa-solid fa-user-circle"></i>
+                                <span>My Profile</span>
+                            </a>
+                            <a href="#" class="dropdown-item" id="ordersLink">
+                                <i class="fa-solid fa-box"></i>
+                                <span>My Orders</span>
+                            </a>
+                            <a href="#" class="dropdown-item" id="settingsLink">
+                                <i class="fa-solid fa-gear"></i>
+                                <span>Settings</span>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <button class="dropdown-item" id="logoutBtn">
+                                <i class="fa-solid fa-right-from-bracket"></i>
+                                <span>Logout</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                // Add dropdown functionality
+                const userMenuBtn = document.getElementById('userMenuBtn');
+                const userDropdown = document.getElementById('userDropdown');
+                
+                userMenuBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    userDropdown.classList.toggle('show');
+                });
+                
+                // Close dropdown when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!userSection.contains(e.target)) {
+                        userDropdown.classList.remove('show');
+                    }
+                });
+                
+                // Logout functionality
+                document.getElementById('logoutBtn').addEventListener('click', async function() {
+                    if (confirm('Are you sure you want to logout?')) {
+                        await auth.logout();
+                    }
+                });
+                
+                // Profile link (you can implement this later)
+                document.getElementById('profileLink').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    alert('Profile page coming soon!');
+                });
+                
+                // Orders link (you can implement this later)
+                document.getElementById('ordersLink').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    alert('Orders page coming soon!');
+                });
+                
+                // Settings link (you can implement this later)
+                document.getElementById('settingsLink').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    alert('Settings page coming soon!');
+                });
+                
+            } else {
+                // User not logged in - show login button
+                userSection.innerHTML = `
+                    <a href="login.html" class="login-btn">Login</a>
+                `;
+            }
+        });
+    </script>
 </body>
 </html>
