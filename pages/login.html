@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,14 +37,14 @@
       min-height: 100vh;
       background: var(--dark-bg);
       padding: 20px;
+      overflow: hidden;
     }
 
     .wrapper {
       position: relative;
       width: 100%;
-      max-width: 850px;
-      height: auto;
-      min-height: 550px;
+      max-width: 800px;
+      height: 500px;
       background: rgb(245, 245, 245);
       border-radius: 20px;
       backdrop-filter: blur(20px);
@@ -61,21 +60,20 @@
       top: 0;
       width: 50%;
       height: 100%;
-      min-height: 550px;
       display: flex;
       justify-content: center;
       flex-direction: column;
-      padding: 40px 50px;
+      padding: 0 50px;
       transition: var(--transition);
       z-index: 1;
       background: rgb(245, 245, 245);
     }
 
     .form-box h2 {
-      font-size: clamp(24px, 5vw, 32px);
+      font-size: 32px;
       color: var(--black);
       text-align: center;
-      margin-bottom: 25px;
+      margin-bottom: 20px;
       position: relative;
     }
 
@@ -94,13 +92,13 @@
     .input-box {
       position: relative;
       width: 100%;
-      margin: 18px 0;
+      margin: 20px 0;
     }
 
     .input-box input {
       width: 100%;
       padding: 12px 35px 12px 10px;
-      font-size: clamp(14px, 2vw, 16px);
+      font-size: 16px;
       border: none;
       outline: none;
       background: transparent;
@@ -118,37 +116,33 @@
       top: 50%;
       left: 10px;
       transform: translateY(-50%);
-      font-size: clamp(12px, 2vw, 14px);
+      font-size: 14px;
       color: rgb(0, 0, 0);
-      pointer-events: none;
-      transition: 0.3s ease-in-out;
-      background: rgb(245, 245, 245);
-      padding: 0 5px;
+      pointer-events: none; 
+      transition: 0.3s;
     }
 
-    .input-box input:focus~label,
-    .input-box input:valid~label {
-      top: -8px;
-      left: 8px;
-      font-size: clamp(10px, 1.5vw, 12px);
+    .input-box input:focus ~ label,
+    .input-box input:valid ~ label {
+      top: -2px;
+      font-size: 12px;
       color: var(--secondary);
       background: rgb(245, 245, 245);
       padding: 0 5px;
     }
-
 
     .input-box i {
       position: absolute;
       top: 50%;
       right: 10px;
       transform: translateY(-50%);
-      font-size: clamp(18px, 3vw, 20px);
+      font-size: 20px;
       color: rgba(0, 0, 0, 0.842);
       transition: color 0.3s;
     }
 
-    .input-box input:focus~i,
-    .input-box input:valid~i {
+    .input-box input:focus ~ i,
+    .input-box input:valid ~ i {
       color: var(--secondary);
     }
 
@@ -161,7 +155,7 @@
       border-radius: 30px;
       background: var(--gradient);
       color: var(--white);
-      font-size: clamp(14px, 2vw, 16px);
+      font-size: 16px;
       font-weight: 600;
       cursor: pointer;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -172,15 +166,11 @@
       box-shadow: 0 0 25px rgba(6, 182, 212, 0.7);
     }
 
-    button:active {
-      transform: translateY(-1px);
-    }
-
     /* Links */
     .linkTxt {
       margin-top: 20px;
       text-align: center;
-      font-size: clamp(12px, 2vw, 14px);
+      font-size: 14px;
       color: #000000;
     }
 
@@ -193,7 +183,6 @@
 
     .linkTxt a:hover {
       color: var(--primary);
-      text-decoration: underline;
     }
 
     /* Info Text */
@@ -205,37 +194,27 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 40px;
+      padding: 0 40px;
       color: var(--white);
       transition: var(--transition);
       z-index: 1;
     }
 
     .info-text h2 {
-      font-size: clamp(28px, 5vw, 36px);
+      font-size: 36px;
       margin-bottom: 10px;
       background: var(--gradient);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      background-clip: text;
     }
 
-    .info-tex.login p {
-      font-size: clamp(13px, 2vw, 15px);
+    .info-text p {
+      font-size: 15px;
       opacity: 0.85;
-      line-height: 1.6;
-      padding-left: 50px;
-    }
-
-    .info-text.register p {
-      font-size: clamp(13px, 2vw, 15px);
-      opacity: 0.85;
-      line-height: 1.6;
     }
 
     /* Background Shapes */
-    .rotate-bg,
-    .rotate-bg2 {
+    .rotate-bg, .rotate-bg2 {
       position: absolute;
       width: 850px;
       height: 600px;
@@ -247,7 +226,7 @@
       top: -4px;
       right: 0;
       background: var(--new);
-      transform: rotate(5.6deg) skewY(35deg);
+      transform: rotate(5.6deg) skewY(40deg);
       transform-origin: bottom right;
       transition: 1.5s ease;
     }
@@ -270,27 +249,10 @@
     }
 
     /* State Management */
-    .form-box.login {
-      left: 0;
-    }
-
-    .form-box.register {
-      right: 0;
-      opacity: 0;
-      transform: translateX(100%);
-      pointer-events: none;
-    }
-
-    .info-text.login {
-      right: 0;
-      text-align: right;
-    }
-
-    .info-text.register {
-      left: 0;
-      transform: translateX(-100%);
-      opacity: 0;
-    }
+    .form-box.login { left: 0; }
+    .form-box.register { right: 0; opacity: 0; transform: translateX(100%); pointer-events: none; }
+    .info-text.login { right: 0; text-align: right; }
+    .info-text.register { left: 0; transform: translateX(-100%); opacity: 0; }
 
     .wrapper.active .form-box.login {
       transform: translateX(-100%);
@@ -320,99 +282,47 @@
       margin: 10px 0;
       border-radius: 8px;
       text-align: center;
-      font-size: clamp(12px, 2vw, 14px);
+      font-size: 14px;
       animation: slideIn 0.3s ease;
     }
-
+    
     @keyframes slideIn {
       from {
         opacity: 0;
         transform: translateY(-10px);
       }
-
       to {
         opacity: 1;
         transform: translateY(0);
       }
     }
-
+    
     .error {
       background-color: #ffe6e6;
       color: #cc0000;
       border: 1px solid #cc0000;
     }
-
+    
     .success {
       background-color: #e6ffe6;
       color: #008800;
       border: 1px solid #008800;
     }
-
+    
     .loading {
       opacity: 0.7;
       pointer-events: none;
-      position: relative;
     }
 
-    .loading::after {
-      content: "";
-      position: absolute;
-      width: 16px;
-      height: 16px;
-      top: 50%;
-      left: 50%;
-      margin-left: -8px;
-      margin-top: -8px;
-      border: 2px solid #ffffff;
-      border-radius: 50%;
-      border-top-color: transparent;
-      animation: spin 0.6s linear infinite;
-    }
-
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    /* Tablet Styles (768px - 1024px) */
-    @media (max-width: 1024px) {
-      .wrapper {
-        max-width: 750px;
-        min-height: 500px;
-      }
-
-      .form-box {
-        padding: 35px 40px;
-        min-height: 500px;
-      }
-
-      .info-text {
-        padding: 35px;
-      }
-
-      .info-text.login p {
-        padding-left: 38px;
-        text-align: right;
-      }
-
-      .rotate-bg,
-      .rotate-bg2 {
-        width: 750px;
-        height: 550px;
-      }
-    }
-
-    /* Mobile Landscape (576px - 768px) */
+    /* Responsive */
     @media (max-width: 768px) {
       body {
-        padding: 15px;
+        overflow: auto;
       }
 
       .wrapper {
         flex-direction: column;
-        width: 100%;
-        max-width: 500px;
+        width: 95%;
         height: auto;
         min-height: auto;
       }
@@ -421,8 +331,7 @@
         position: relative;
         width: 100%;
         height: auto;
-        min-height: auto;
-        padding: 40px 30px;
+        padding: 30px;
         transform: none !important;
         opacity: 1 !important;
         pointer-events: auto !important;
@@ -472,120 +381,12 @@
         text-align: center;
       }
 
-      .rotate-bg,
-      .rotate-bg2 {
+      .rotate-bg, .rotate-bg2 { 
         display: none;
-      }
-
-      .input-box {
-        margin: 15px 0;
-      }
-
-      button {
-        padding: 14px;
-        margin-top: 10px;
-      }
-    }
-
-    /* Mobile Portrait (below 576px) */
-    @media (max-width: 576px) {
-      body {
-        padding: 10px;
-      }
-
-      .wrapper {
-        border-radius: 15px;
-      }
-
-      .form-box {
-        padding: 30px 25px;
-      }
-
-      .form-box h2 {
-        margin-bottom: 20px;
-      }
-
-      .info-text {
-        padding: 25px 20px;
-      }
-
-      .info-text h2 {
-        margin-bottom: 8px;
-      }
-
-      .input-box {
-        margin: 12px 0;
-      }
-
-      .input-box input {
-        padding: 10px 30px 10px 8px;
-      }
-
-      button {
-        padding: 12px;
-        font-weight: 500;
-      }
-
-      .linkTxt {
-        margin-top: 15px;
-      }
-    }
-
-    /* Extra Small Devices (below 375px) */
-    @media (max-width: 375px) {
-      .form-box {
-        padding: 25px 20px;
-      }
-
-      .info-text {
-        padding: 20px 15px;
-      }
-
-      .input-box {
-        margin: 10px 0;
-      }
-    }
-
-    /* Landscape Orientation for Mobile */
-    @media (max-height: 500px) and (orientation: landscape) {
-      body {
-        padding: 10px;
-      }
-
-      .wrapper {
-        min-height: auto;
-      }
-
-      .form-box {
-        padding: 20px 30px;
-        min-height: auto;
-      }
-
-      .form-box h2 {
-        margin-bottom: 15px;
-        font-size: 24px;
-      }
-
-      .info-text {
-        padding: 20px;
-      }
-
-      .input-box {
-        margin: 10px 0;
-      }
-
-      button {
-        padding: 10px;
-        margin-top: 10px;
-      }
-
-      .linkTxt {
-        margin-top: 10px;
       }
     }
   </style>
 </head>
-
 <body>
   <div class="wrapper">
     <span class="rotate-bg"></span>
@@ -615,7 +416,7 @@
 
     <div class="info-text login">
       <h2>Welcome Back!</h2>
-      <p>Please log in with your credentials to continue shopping with us.</p>
+      <p>Please log in with your credentials to continue.</p>
     </div>
 
     <!-- Register Form -->
@@ -652,29 +453,30 @@
 
     <div class="info-text register">
       <h2>Join Us Today!</h2>
-      <p>Create your account to get started with our amazing services and exclusive offers.</p>
+      <p>Create your account to get started with our services.</p>
     </div>
   </div>
 
+  <!-- Auth Script -->
+  <script src="/Javascripts/auth.js"></script>
+  
   <!-- Script -->
-   <script src="/Javascripts/auth.js"></script>
   <script>
     const wrapper = document.querySelector('.wrapper');
     const registerLink = document.querySelector('.register-link');
     const loginLink = document.querySelector('.login-link');
 
-    // Form toggle functionality
     registerLink.addEventListener("click", (e) => {
       e.preventDefault();
       wrapper.classList.add('active');
     });
-
+    
     loginLink.addEventListener("click", (e) => {
       e.preventDefault();
       wrapper.classList.remove('active');
     });
 
-    // Utility functions for backend integration
+    // Utility functions
     function showMessage(elementId, message, type) {
       const messageEl = document.getElementById(elementId);
       messageEl.innerHTML = `<div class="message ${type}">${message}</div>`;
@@ -694,13 +496,18 @@
       }
     }
 
-    // Login form handler (ready for backend integration)
+    // Check if user is already logged in
+    if (auth.isLoggedIn()) {
+      window.location.href = 'index.html';
+    }
+
+    // Login form handler
     document.getElementById('loginForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-
+      
       const identifier = document.getElementById('loginIdentifier').value.trim();
       const password = document.getElementById('loginPassword').value;
-
+      
       if (!identifier || !password) {
         showMessage('loginMessage', 'Please fill in all fields', 'error');
         return;
@@ -708,102 +515,68 @@
 
       setLoading('loginBtn', true);
 
-      // Simulate API call - Replace with actual backend call
-      setTimeout(() => {
-        setLoading('loginBtn', false);
-        showMessage('loginMessage', 'Login successful! Redirecting...', 'success');
+      const result = await auth.login(identifier, password);
 
-        // Redirect after success
+      setLoading('loginBtn', false);
+
+      if (result.success) {
+        showMessage('loginMessage', 'Login successful! Redirecting...', 'success');
         setTimeout(() => {
           window.location.href = 'index.html';
-        }, 1500);
-      }, 1500);
-      
-      // Uncomment when backend is ready:
-      try {
-        const response = await fetch('http://localhost:5000/api/auth/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ identifier, password })
-        });
-        
-        const data = await response.json();
-        setLoading('loginBtn', false);
-
-        if (response.ok) {
-          localStorage.setItem('accessToken', data.accessToken);
-          localStorage.setItem('refreshToken', data.refreshToken);
-          localStorage.setItem('user', JSON.stringify(data.user));
-          showMessage('loginMessage', 'Login successful! Redirecting...', 'success');
-          setTimeout(() => window.location.href = 'index.html', 1500);
-        } else {
-          showMessage('loginMessage', data.error, 'error');
-        }
-      } catch (error) {
-        setLoading('loginBtn', false);
-        showMessage('loginMessage', 'Network error. Please try again.', 'error');
+        }, 1000);
+      } else {
+        showMessage('loginMessage', result.error, 'error');
       }
     });
 
-    // Register form handler (ready for backend integration)
+    // Register form handler
     document.getElementById('registerForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-
+      
       const username = document.getElementById('registerUsername').value.trim();
       const email = document.getElementById('registerEmail').value.trim();
       const phone = document.getElementById('registerPhone').value.trim();
       const password = document.getElementById('registerPassword').value;
-
+      
       if (!username || !email || !phone || !password) {
         showMessage('registerMessage', 'Please fill in all fields', 'error');
         return;
       }
 
-      // Basic validation
+      // Validate email
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        showMessage('registerMessage', 'Please enter a valid email address', 'error');
+        return;
+      }
+
+      // Validate password
       if (password.length < 8) {
         showMessage('registerMessage', 'Password must be at least 8 characters', 'error');
         return;
       }
 
+      // Validate phone number
+      if (phone.length < 10) {
+        showMessage('registerMessage', 'Please enter a valid phone number', 'error');
+        return;
+      }
+
       setLoading('registerBtn', true);
 
-      // Simulate API call - Replace with actual backend call
-      setTimeout(() => {
-        setLoading('registerBtn', false);
-        showMessage('registerMessage', 'Registration successful! Redirecting...', 'success');
+      const result = await auth.register(username, email, phone, password);
 
-        // Redirect after success
+      setLoading('registerBtn', false);
+
+      if (result.success) {
+        showMessage('registerMessage', 'Registration successful! Redirecting...', 'success');
         setTimeout(() => {
           window.location.href = 'index.html';
-        }, 1500);
-      }, 1500);
-
-      // Uncomment when backend is ready:
-      try {
-        const response = await fetch('http://localhost:5000/api/auth/register', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username, email, password })
-        });
-        
-        const data = await response.json();
-        setLoading('registerBtn', false);
-
-        if (response.ok) {
-          localStorage.setItem('accessToken', data.accessToken);
-          localStorage.setItem('refreshToken', data.refreshToken);
-          localStorage.setItem('user', JSON.stringify(data.user));
-          showMessage('registerMessage', 'Registration successful! Redirecting...', 'success');
-          setTimeout(() => window.location.href = 'index.html', 1500);
-        } else {
-          showMessage('registerMessage', data.error, 'error');
-        }
-      } catch (error) {
-        setLoading('registerBtn', false);
-        showMessage('registerMessage', 'Network error. Please try again.', 'error');
+        }, 1000);
+      } else {
+        showMessage('registerMessage', result.error, 'error');
       }
     });
   </script>
 </body>
-
 </html>
