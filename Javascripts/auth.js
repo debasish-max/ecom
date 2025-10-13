@@ -198,6 +198,81 @@ class AuthManager {
       return { success: false, error: 'Unable to update profile' };
     }
   }
+
+  // Forgot Password - Request reset link
+  async forgotPassword(email) {
+    try {
+      const response = await fetch(`${this.baseURL}/auth/forgot-password`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        return { success: true, message: data.message };
+      } else {
+        return { success: false, error: data.error };
+      }
+    } catch (error) {
+      console.error('Forgot password error:', error);
+      return { success: false, error: 'Unable to connect to server. Please try again.' };
+    }
+  }
+
+  // Reset Password - Reset with token
+  async resetPassword(token, newPassword) {
+    try {
+      const response = await fetch(`${this.baseURL}/auth/reset-password`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ token, newPassword })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        return { success: true, message: data.message };
+      } else {
+        return { success: false, error: data.error };
+      }
+    } catch (error) {
+      console.error('Reset password error:', error);
+      return { success: false, error: 'Unable to connect to server. Please try again.' };
+    }
+  }
+
+  // Change Password (for logged in users)
+  async changePassword(currentPassword, newPassword) {
+    try {
+      const response = await this.authenticatedRequest(`${this.baseURL}/user/change-password`, {
+        method: 'POST',
+        body: JSON.stringify({ currentPassword, newPassword })
+      });
+
+      if (response && response.ok) {
+        const data = await response.json();
+        // Clear tokens as backend invalidates all sessions
+        this.logout();
+        return { success: true, message: data.message };
+      }
+      
+      if (response) {
+        const data = await response.json();
+        return { success: false, error: data.error };
+      }
+      
+      return { success: false, error: 'Failed to change password' };
+    } catch (error) {
+      console.error('Change password error:', error);
+      return { success: false, error: 'Unable to change password' };
+    }
+  }
 }
 
 // Initialize and export auth manager
