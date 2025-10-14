@@ -183,6 +183,7 @@
 
     .linkTxt a:hover {
       color: var(--primary);
+      text-decoration: underline;
     }
 
     /* Info Text */
@@ -250,9 +251,11 @@
 
     /* State Management */
     .form-box.login { left: 0; }
-    .form-box.register { right: 0; opacity: 0; transform: translateX(100%); pointer-events: none; }
+    .form-box.register,
+    .form-box.forgot { right: 0; opacity: 0; transform: translateX(100%); pointer-events: none; }
     .info-text.login { right: 0; text-align: right; }
-    .info-text.register { left: 0; transform: translateX(-100%); opacity: 0; }
+    .info-text.register,
+    .info-text.forgot { left: 0; transform: translateX(-100%); opacity: 0; }
 
     .wrapper.active .form-box.login {
       transform: translateX(-100%);
@@ -274,6 +277,27 @@
     .wrapper.active .info-text.register {
       transform: translateX(0);
       opacity: 1;
+    }
+
+    /* Forgot Password State */
+    .wrapper.forgot-active .form-box.login,
+    .wrapper.forgot-active .form-box.register,
+    .wrapper.forgot-active .info-text.login,
+    .wrapper.forgot-active .info-text.register {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.9);
+    }
+
+    .wrapper.forgot-active .form-box.forgot {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+    }
+
+    .wrapper.forgot-active .info-text.forgot {
+      opacity: 1;
+      transform: scale(1);
     }
 
     /* Message Styles */
@@ -341,7 +365,8 @@
         display: block;
       }
 
-      .form-box.register {
+      .form-box.register,
+      .form-box.forgot {
         display: none;
       }
 
@@ -350,6 +375,15 @@
       }
 
       .wrapper.active .form-box.register {
+        display: block;
+      }
+
+      .wrapper.forgot-active .form-box.login,
+      .wrapper.forgot-active .form-box.register {
+        display: none;
+      }
+
+      .wrapper.forgot-active .form-box.forgot {
         display: block;
       }
 
@@ -368,7 +402,8 @@
         text-align: center;
       }
 
-      .info-text.register {
+      .info-text.register,
+      .info-text.forgot {
         display: none;
       }
 
@@ -377,6 +412,16 @@
       }
 
       .wrapper.active .info-text.register {
+        display: block;
+        text-align: center;
+      }
+
+      .wrapper.forgot-active .info-text.login,
+      .wrapper.forgot-active .info-text.register {
+        display: none;
+      }
+
+      .wrapper.forgot-active .info-text.forgot {
         display: block;
         text-align: center;
       }
@@ -409,6 +454,7 @@
         </div>
         <button type="submit" id="loginBtn">Login</button>
         <div class="linkTxt">
+          <p><a href="#" class="forgot-link">Forgot Password?</a></p>
           <p>Don't have an account? <a href="#" class="register-link">Sign Up</a></p>
         </div>
       </form>
@@ -455,6 +501,28 @@
       <h2>Join Us Today!</h2>
       <p>Create your account to get started with our services.</p>
     </div>
+
+    <!-- Forgot Password Form -->
+    <div class="form-box forgot">
+      <h2>Forgot Password?</h2>
+      <form id="forgotForm">
+        <div id="forgotMessage"></div>
+        <div class="input-box">
+          <input type="email" id="forgotEmail" required>
+          <label>Email Address</label>
+          <i class='bx bxs-envelope'></i>
+        </div>
+        <button type="submit" id="forgotBtn">Send Reset Link</button>
+        <div class="linkTxt">
+          <p><a href="#" class="back-login">Back to Login</a></p>
+        </div>
+      </form>
+    </div>
+
+    <div class="info-text forgot">
+      <h2>Reset Password</h2>
+      <p>Enter your email and we'll send you a link to reset your password.</p>
+    </div>
   </div>
 
   <!-- Auth Script -->
@@ -465,14 +533,31 @@
     const wrapper = document.querySelector('.wrapper');
     const registerLink = document.querySelector('.register-link');
     const loginLink = document.querySelector('.login-link');
+    const forgotLink = document.querySelector('.forgot-link');
+    const backLogin = document.querySelector('.back-login');
 
+    // Toggle between forms
     registerLink.addEventListener("click", (e) => {
       e.preventDefault();
+      wrapper.classList.remove('forgot-active');
       wrapper.classList.add('active');
     });
     
     loginLink.addEventListener("click", (e) => {
       e.preventDefault();
+      wrapper.classList.remove('active');
+      wrapper.classList.remove('forgot-active');
+    });
+
+    forgotLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      wrapper.classList.remove('active');
+      wrapper.classList.add('forgot-active');
+    });
+
+    backLogin.addEventListener("click", (e) => {
+      e.preventDefault();
+      wrapper.classList.remove('forgot-active');
       wrapper.classList.remove('active');
     });
 
@@ -492,7 +577,9 @@
       } else {
         btn.classList.remove('loading');
         btn.disabled = false;
-        btn.textContent = buttonId === 'loginBtn' ? 'Login' : 'Sign Up';
+        if (buttonId === 'loginBtn') btn.textContent = 'Login';
+        else if (buttonId === 'registerBtn') btn.textContent = 'Sign Up';
+        else if (buttonId === 'forgotBtn') btn.textContent = 'Send Reset Link';
       }
     }
 
@@ -575,6 +662,45 @@
         }, 1000);
       } else {
         showMessage('registerMessage', result.error, 'error');
+      }
+    });
+
+    // Forgot Password form handler
+    document.getElementById('forgotForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const email = document.getElementById('forgotEmail').value.trim();
+      
+      if (!email) {
+        showMessage('forgotMessage', 'Please enter your email address', 'error');
+        return;
+      }
+
+      // Validate email
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        showMessage('forgotMessage', 'Please enter a valid email address', 'error');
+        return;
+      }
+
+      setLoading('forgotBtn', true);
+
+      const result = await auth.forgotPassword(email);
+
+      setLoading('forgotBtn', false);
+
+      if (result.success) {
+        showMessage('forgotMessage', 'Password reset link sent! Check your email.', 'success');
+        document.getElementById('forgotEmail').value = '';
+        
+        // Show reset link in console for development
+        console.log('Development Mode: Check console for reset link');
+        
+        setTimeout(() => {
+          wrapper.classList.remove('forgot-active');
+        }, 3000);
+      } else {
+        showMessage('forgotMessage', result.error, 'error');
       }
     });
   </script>
