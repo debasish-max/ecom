@@ -49,15 +49,13 @@ function initCursor() {
     let mouseY = 0;
     let cursorX = 0;
     let cursorY = 0;
-    const speed = 0.15;
+    const speed = 0.2;
 
-    // Mouse movement
     document.addEventListener('mousemove', (e) => {
         mouseX = e.clientX;
         mouseY = e.clientY;
     });
 
-    // Smooth cursor animation
     function animate() {
         const distX = mouseX - cursorX;
         const distY = mouseY - cursorY;
@@ -73,21 +71,9 @@ function initCursor() {
 
     animate();
 
-    // Click effect
-    document.addEventListener('mousedown', () => {
-        cursor.classList.add('click');
-    });
-
-    document.addEventListener('mouseup', () => {
-        cursor.classList.remove('click');
-    });
-
-    // Enhanced hover effects for different elements
+    // Hover effects
     const hoverElements = document.querySelectorAll('[data-cursor-hover]');
-    const linkElements = document.querySelectorAll('a, button');
-    const textElements = document.querySelectorAll('h1, h2, h3, p');
-
-    // Standard hover elements
+    
     hoverElements.forEach(el => {
         el.addEventListener('mouseenter', () => {
             cursor.classList.add('hover');
@@ -96,43 +82,6 @@ function initCursor() {
         el.addEventListener('mouseleave', () => {
             cursor.classList.remove('hover');
         });
-    });
-
-    // Link and button elements
-    linkElements.forEach(el => {
-        el.addEventListener('mouseenter', () => {
-            if (el.classList.contains('project-card') || el.classList.contains('nav-link')) {
-                cursor.classList.add('link-hover');
-            } else {
-                cursor.classList.add('hover');
-            }
-        });
-        
-        el.addEventListener('mouseleave', () => {
-            cursor.classList.remove('link-hover', 'hover');
-        });
-    });
-
-    // Text selection
-    textElements.forEach(el => {
-        el.addEventListener('mouseenter', () => {
-            if (!el.closest('a') && !el.closest('button')) {
-                cursor.classList.add('text-hover');
-            }
-        });
-        
-        el.addEventListener('mouseleave', () => {
-            cursor.classList.remove('text-hover');
-        });
-    });
-
-    // Hide cursor when leaving window
-    document.addEventListener('mouseleave', () => {
-        cursor.style.opacity = '0';
-    });
-
-    document.addEventListener('mouseenter', () => {
-        cursor.style.opacity = '1';
     });
 }
 
@@ -178,95 +127,42 @@ function initPreloader() {
    =========================== */
 
 function initAnimations() {
-    // Hero animations with dramatic entrances
-    const tl = gsap.timeline({ 
-        defaults: { 
-            ease: 'power4.out' 
-        } 
-    });
+    // Hero animations
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-    // Animate label
     tl.to('.hero-label', {
         opacity: 1,
         y: 0,
-        duration: 1,
-        ease: 'power3.out'
+        duration: 0.8
     })
-    
-    // Animate title words with 3D effect
     .to('.hero-title-word', {
         y: 0,
-        rotateX: 0,
         opacity: 1,
-        stagger: 0.15,
-        duration: 1.2,
-        ease: 'power4.out'
-    }, '-=0.6')
-    
-    // Animate description
+        stagger: 0.1,
+        duration: 1
+    }, '-=0.4')
     .to('.hero-description', {
         opacity: 1,
         y: 0,
         duration: 0.8
-    }, '-=0.8')
-    
-    // Animate CTA buttons
+    }, '-=0.6')
     .to('.hero-cta', {
         opacity: 1,
         y: 0,
         duration: 0.8
     }, '-=0.6')
-    
-    // Animate stats
     .to('.hero-stats', {
         opacity: 1,
         y: 0,
-        duration: 0.8,
-        onComplete: () => {
-            animateCounters();
-        }
+        duration: 0.8
     }, '-=0.6')
-    
-    // Animate scroll indicator
     .to('.scroll-indicator', {
         opacity: 1,
-        duration: 1
+        duration: 0.8
     }, '-=0.4');
 
-    // Add magnetic effect to buttons
-    initMagneticButtons();
-}
-
-/* ===========================
-   MAGNETIC BUTTON EFFECT
-   =========================== */
-
-function initMagneticButtons() {
-    const magneticButtons = document.querySelectorAll('.btn-primary, .btn-secondary, .btn-video, .nav-link, .btn-login');
-    
-    magneticButtons.forEach(button => {
-        button.addEventListener('mousemove', (e) => {
-            const rect = button.getBoundingClientRect();
-            const x = e.clientX - rect.left - rect.width / 2;
-            const y = e.clientY - rect.top - rect.height / 2;
-            
-            gsap.to(button, {
-                x: x * 0.3,
-                y: y * 0.3,
-                duration: 0.3,
-                ease: 'power2.out'
-            });
-        });
-        
-        button.addEventListener('mouseleave', () => {
-            gsap.to(button, {
-                x: 0,
-                y: 0,
-                duration: 0.5,
-                ease: 'elastic.out(1, 0.5)'
-            });
-        });
-    });
+    // Counter animation
+    animateCounters();
 }
 
 /* ===========================
@@ -301,101 +197,80 @@ function animateCounters() {
    =========================== */
 
 function initScrollAnimations() {
-    // Parallax hero background with multiple layers
+    // Parallax hero background
     gsap.to('.hero-gradient', {
         scrollTrigger: {
             trigger: '.hero',
             start: 'top top',
             end: 'bottom top',
-            scrub: 1.5
+            scrub: 1
         },
-        y: 300,
-        scale: 1.3,
-        opacity: 0.5,
+        y: 200,
+        scale: 1.2,
         ease: 'none'
     });
 
-    // Fade and slide sections
-    gsap.utils.toArray('section').forEach((section, index) => {
+    // Fade in sections
+    gsap.utils.toArray('section').forEach(section => {
         gsap.from(section, {
             scrollTrigger: {
                 trigger: section,
-                start: 'top 85%',
-                end: 'top 30%',
-                toggleActions: 'play none none reverse',
-                onEnter: () => section.classList.add('in-view'),
-                onLeaveBack: () => section.classList.remove('in-view')
+                start: 'top 80%',
+                end: 'top 20%',
+                toggleActions: 'play none none reverse'
             },
             opacity: 0,
-            y: 100,
-            duration: 1.2,
+            y: 50,
+            duration: 1,
             ease: 'power3.out'
         });
     });
 
-    // Project cards with 3D tilt effect
+    // Project cards animation
     gsap.utils.toArray('.project-card').forEach((card, index) => {
-        // Initial animation
         gsap.from(card, {
             scrollTrigger: {
                 trigger: card,
-                start: 'top 90%',
+                start: 'top 85%',
                 once: true
             },
             opacity: 0,
-            y: 100,
-            rotateX: 15,
-            duration: 1,
-            delay: index * 0.15,
+            y: 80,
+            duration: 0.8,
+            delay: index * 0.1,
             ease: 'power3.out'
         });
-
-        // Add parallax effect to images
-        const img = card.querySelector('.project-image img');
-        if (img) {
-            gsap.to(img, {
-                scrollTrigger: {
-                    trigger: card,
-                    start: 'top bottom',
-                    end: 'bottom top',
-                    scrub: 1
-                },
-                y: -50,
-                ease: 'none'
-            });
-        }
     });
 
-    // Feature items with stagger
+    // Feature items
     gsap.utils.toArray('.feature-item').forEach((item, index) => {
         gsap.from(item, {
             scrollTrigger: {
                 trigger: item,
-                start: 'top 90%',
+                start: 'top 85%',
                 once: true
             },
             opacity: 0,
-            x: -80,
-            duration: 1,
-            delay: index * 0.2,
+            x: -50,
+            duration: 0.8,
+            delay: index * 0.15,
             ease: 'power3.out'
         });
     });
 
-    // Testimonials with scale effect
+    // Testimonials
     gsap.utils.toArray('.testimonial-card').forEach((card, index) => {
         gsap.from(card, {
             scrollTrigger: {
                 trigger: card,
-                start: 'top 90%',
+                start: 'top 85%',
                 once: true
             },
             opacity: 0,
-            scale: 0.9,
-            y: 80,
-            duration: 1,
-            delay: index * 0.15,
-            ease: 'back.out(1.4)'
+            y: 60,
+            duration: 0.8,
+            delay: index * 0.12,
+            ease: 'power3.out'
         });
     });
 
@@ -406,76 +281,18 @@ function initScrollAnimations() {
         marqueeContent.parentNode.appendChild(clone);
     }
 
-    // Section titles with split animation
+    // Section titles
     gsap.utils.toArray('.section-title').forEach(title => {
-        const words = title.textContent.split(' ');
-        title.innerHTML = words.map(word => 
-            `<span style="display: inline-block; overflow: hidden;">
-                <span style="display: inline-block;">${word}</span>
-            </span>`
-        ).join(' ');
-
-        const spans = title.querySelectorAll('span > span');
-        
-        gsap.from(spans, {
+        gsap.from(title, {
             scrollTrigger: {
                 trigger: title,
                 start: 'top 85%',
                 once: true
             },
-            y: 100,
             opacity: 0,
-            rotateX: -45,
-            stagger: 0.05,
-            duration: 1,
-            ease: 'power4.out'
-        });
-    });
-
-    // Section labels with slide effect
-    gsap.utils.toArray('.section-label').forEach(label => {
-        gsap.from(label, {
-            scrollTrigger: {
-                trigger: label,
-                start: 'top 90%',
-                once: true
-            },
-            opacity: 0,
-            x: -50,
+            y: 40,
             duration: 0.8,
             ease: 'power3.out'
-        });
-    });
-
-    // About text reveal
-    gsap.utils.toArray('.about-text').forEach((text, index) => {
-        gsap.from(text, {
-            scrollTrigger: {
-                trigger: text,
-                start: 'top 90%',
-                once: true
-            },
-            opacity: 0,
-            y: 30,
-            duration: 0.8,
-            delay: index * 0.1,
-            ease: 'power2.out'
-        });
-    });
-
-    // Form inputs
-    gsap.utils.toArray('.form-group').forEach((group, index) => {
-        gsap.from(group, {
-            scrollTrigger: {
-                trigger: group,
-                start: 'top 90%',
-                once: true
-            },
-            opacity: 0,
-            x: -30,
-            duration: 0.6,
-            delay: index * 0.08,
-            ease: 'power2.out'
         });
     });
 }
@@ -487,27 +304,18 @@ function initScrollAnimations() {
 function initNavigation() {
     const nav = document.querySelector('.nav');
     let lastScroll = 0;
-    const scrollThreshold = 100;
 
     window.addEventListener('scroll', () => {
         const currentScroll = window.pageYOffset;
 
-        // Add scrolled class for style changes
-        if (currentScroll > 50) {
-            nav.classList.add('scrolled');
-        } else {
-            nav.classList.remove('scrolled');
-        }
-
-        // Hide/show navigation based on scroll direction
         if (currentScroll <= 0) {
-            nav.classList.remove('hidden');
-        } else if (currentScroll > lastScroll && currentScroll > scrollThreshold) {
+            nav.style.transform = 'translateY(0)';
+        } else if (currentScroll > lastScroll && currentScroll > 100) {
             // Scrolling down
-            nav.classList.add('hidden');
-        } else if (currentScroll < lastScroll) {
+            nav.style.transform = 'translateY(-100%)';
+        } else {
             // Scrolling up
-            nav.classList.remove('hidden');
+            nav.style.transform = 'translateY(0)';
         }
 
         lastScroll = currentScroll;
@@ -519,36 +327,11 @@ function initNavigation() {
             e.preventDefault();
             const target = document.querySelector(this.getAttribute('href'));
             
-            if (target && lenis) {
+            if (target) {
                 lenis.scrollTo(target, {
                     offset: -100,
-                    duration: 1.5,
-                    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+                    duration: 1.5
                 });
-            }
-        });
-    });
-
-    // Highlight active nav link based on scroll position
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-link');
-
-    window.addEventListener('scroll', () => {
-        let current = '';
-        
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-            
-            if (window.pageYOffset >= sectionTop - 200) {
-                current = section.getAttribute('id');
-            }
-        });
-
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === `#${current}`) {
-                link.classList.add('active');
             }
         });
     });
@@ -564,12 +347,10 @@ function initProjectCards() {
     cards.forEach(card => {
         const img = card.querySelector('.project-image img');
         
-        // Enhanced hover effect
         card.addEventListener('mouseenter', () => {
             gsap.to(img, {
-                scale: 1.15,
-                rotation: 2,
-                duration: 0.8,
+                scale: 1.1,
+                duration: 0.6,
                 ease: 'power2.out'
             });
         });
@@ -577,38 +358,7 @@ function initProjectCards() {
         card.addEventListener('mouseleave', () => {
             gsap.to(img, {
                 scale: 1,
-                rotation: 0,
-                duration: 0.8,
-                ease: 'power2.out'
-            });
-        });
-
-        // 3D tilt effect on mouse move
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            
-            const rotateX = (y - centerY) / 20;
-            const rotateY = (centerX - x) / 20;
-            
-            gsap.to(card, {
-                rotateX: rotateX,
-                rotateY: rotateY,
-                duration: 0.5,
-                ease: 'power2.out',
-                transformPerspective: 1000
-            });
-        });
-        
-        card.addEventListener('mouseleave', () => {
-            gsap.to(card, {
-                rotateX: 0,
-                rotateY: 0,
-                duration: 0.5,
+                duration: 0.6,
                 ease: 'power2.out'
             });
         });
@@ -660,85 +410,40 @@ function initForm() {
 function initBarba() {
     barba.init({
         transitions: [{
-            name: 'slide-transition',
+            name: 'default-transition',
             
-            async leave(data) {
-                // Create transition layers
-                const transitionContainer = document.createElement('div');
-                transitionContainer.className = 'page-transition';
-                
-                for (let i = 0; i < 3; i++) {
-                    const layer = document.createElement('div');
-                    layer.className = 'transition-layer';
-                    transitionContainer.appendChild(layer);
-                }
-                
-                document.body.appendChild(transitionContainer);
-                
-                // Animate layers in
-                const layers = transitionContainer.querySelectorAll('.transition-layer');
-                
-                await gsap.to(layers, {
-                    y: 0,
-                    stagger: 0.1,
-                    duration: 0.8,
-                    ease: 'power4.inOut'
-                });
-                
-                // Fade out current page
-                await gsap.to(data.current.container, {
+            leave(data) {
+                return gsap.to(data.current.container, {
                     opacity: 0,
-                    duration: 0.3,
+                    duration: 0.5,
                     ease: 'power2.inOut'
                 });
-                
-                return transitionContainer;
             },
             
-            async enter(data) {
+            enter(data) {
                 window.scrollTo(0, 0);
                 
-                // Fade in new page
-                gsap.set(data.next.container, { opacity: 0 });
-                
-                await gsap.to(data.next.container, {
-                    opacity: 1,
+                return gsap.from(data.next.container, {
+                    opacity: 0,
                     duration: 0.5,
-                    ease: 'power2.out'
+                    ease: 'power2.inOut',
+                    onComplete: () => {
+                        // Reinitialize animations for new page
+                        initScrollAnimations();
+                        initProjectCards();
+                        ScrollTrigger.refresh();
+                    }
                 });
-            },
-            
-            async after(data) {
-                // Remove transition layers
-                const transitionContainer = document.querySelector('.page-transition');
-                const layers = transitionContainer.querySelectorAll('.transition-layer');
-                
-                await gsap.to(layers, {
-                    y: '100%',
-                    stagger: 0.1,
-                    duration: 0.8,
-                    ease: 'power4.inOut'
-                });
-                
-                transitionContainer.remove();
-                
-                // Reinitialize all interactions
-                initScrollAnimations();
-                initProjectCards();
-                initMagneticButtons();
-                updateCursorHovers();
-                ScrollTrigger.refresh();
             }
         }],
         
         views: [{
             namespace: 'home',
             afterEnter() {
+                // Home page specific initializations
                 console.log('Home page loaded');
             }
-        }],
-        
-        prevent: ({ el }) => el.classList && el.classList.contains('no-barba')
+        }]
     });
 }
 
